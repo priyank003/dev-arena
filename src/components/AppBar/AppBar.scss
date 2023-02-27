@@ -1,0 +1,58 @@
+.AppBar {
+  color: $white;
+  background: $black;
+
+  display: flex;
+  align-items: center;
+
+  .jobsMenu {
+    .ant-select-selector {
+      background: $black  !important;
+      border: none;
+
+      .ant-select-selection-item {
+        color: $white;
+      }
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+      width: 80px !important;
+    }
+  }
+
+  .ant-select-dropdown {
+    background: #e0e0e0 !important;
+    border-radius: 0px;
+  }
+
+  .search {
+    border: 3px solid #144B7E !important;
+    border-radius: 16px !important;
+  }
+
+  .ant-input {
+    background: #16161C !important;
+    color: white !important;
+  }
+
+  ::placeholder {
+    color: #605d5d;
+  }
+
+}
+
+.upload-btn {
+  $gradient-btn-1: #9D387E;
+  $gradient-btn-2: #E85D5C;
+  outline: none;
+  border: 0;
+  border-radius: 5px;
+  background: linear-gradient(45deg, $gradient-btn-1, $gradient-btn-2);
+  transition: background 0.3s ease-in-out;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: linear-gradient(45deg, darken($gradient-btn-1, 5%), darken($gradient-btn-2, 5%));
+  }
+}

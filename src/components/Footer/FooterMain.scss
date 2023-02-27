@@ -1,0 +1,75 @@
+.Footer {
+  background: #27282b;
+
+  .circle {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    border-radius: 75px;
+    background: #343538;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .subscribe_input {
+    padding: 0px 6px 0px 24px !important;
+    width: 457px !important;
+    height: 48px !important;
+    background: #343538 !important;
+    border-radius: 30px !important;
+    border: none !important;
+
+    @media screen and (min-width: 100px) and (max-width: 426px) {
+      padding: 40px !important;
+    }
+
+    @media screen and (min-width: 100px) and (max-width: 426px) {
+      width: 100% !important;
+      height: 48px !important;
+    }
+
+    @media screen and (min-width: 426px) and (max-width: 768px) {
+      width: 100% !important;
+    }
+
+    .ant-input {
+      color: #f2f3f5 !important;
+      background: #343538 !important;
+    }
+
+    button {
+      svg {
+        height: 26px;
+      }
+    }
+
+    ::placeholder {
+      color: #605d5d;
+    }
+  }
+
+  padding: 2rem 3rem;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    padding: 2rem 3rem;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+    padding: 3rem 3rem;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    padding: 4rem 4rem;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {
+    padding: 5rem 5rem;
+  }
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {}
+}

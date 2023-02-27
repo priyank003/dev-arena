@@ -1,0 +1,14 @@
+.DiscoverPage {
+  textAlign:center;
+  margin:auto;
+  width: 90%;
+  @media screen and (min-width: 100px) and (max-width: 426px) {
+    padding: 10px !important;
+  }
+
+  .ant-radio-group {
+    .ant-radio-button-wrapper {
+      border-radius: 0px;
+    }
+  }
+}

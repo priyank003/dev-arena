@@ -1,0 +1,44 @@
+.PricingPage {
+  .pricing_card {
+    // width: 330px !important;
+    // height: 442.97px !important;
+    padding: 25px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.25);
+
+    button {
+      //   width: 285px;
+      height: 45.27px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid #eae9f2;
+    }
+  }
+
+  .premium_card {
+    height: 375px;
+    border-radius: 10px;
+    background: #0cc6ea;
+    color: #ffffff !important;
+    // box-shadow: 0px 32px 34px rgba(255, 112, 59, 0.317827);
+
+    button {
+      border: none;
+      background: #01d6ff;
+      border-radius: 10px !important;
+    }
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 426px) {
+  .PricingPage {
+    padding: 40px !important;
+  }
+}
+
+@media screen and (min-width: 426px) and (max-width: 1024px) {
+  .PricingPage {
+    padding: 60px 30px !important;
+  }
+}

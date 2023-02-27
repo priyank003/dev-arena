@@ -1,0 +1,62 @@
+.UserPosts {
+  padding: 2.5rem 0;
+
+  .post_card {
+    background: #222222;
+    border-radius: 10px;
+    // height: 135px;
+    padding: 20px;
+  }
+
+  .cards_group {
+    padding: 0 150px;
+  }
+
+  .circle {
+    width: 45px;
+    height: auto;
+    border-radius: 75px;
+  }
+}
+
+element.style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// :where(.css-dev-only-do-not-override-1i536d8)[class^="ant-col"] [class^="ant-col"], :where(.css-dev-only-do-not-override-1i536d8)[class*=" ant-col"] [class^="ant-col"], :where(.css-dev-only-do-not-override-1i536d8)[class^="ant-col"] [class*=" ant-col"], :where(.css-dev-only-do-not-override-1i536d8)[class*=" ant-col"] [class*=" ant-col"] {
+//   box-sizing: border-box;
+// }
+// .ant-col-1 {
+//   max-width: "15% !important";
+// }
+
+// :where(.css-dev-only-do-not-override-1i536d8).ant-col-1 {
+//   display: block;
+//   flex: 0 0 4.166666666666666%;
+//   max-width: 38.166667%;
+// }
+.questionColumn{
+  max-width: 12% !important;
+}
+
+
+
+@media screen and (min-width: 426px) and (max-width: 786px) {
+  .UserPosts {
+    .cards_group {
+      padding: 0 50px !important;
+    }
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 425px) {
+  .UserPosts {
+    .cards_group {
+      padding: 0 40px !important;
+    }
+    margin-bottom: 30px;
+  }
+}

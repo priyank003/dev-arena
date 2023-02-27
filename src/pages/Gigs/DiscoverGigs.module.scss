@@ -1,0 +1,306 @@
+.DiscoverGigs {
+  padding: 2rem;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    padding: 2rem;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+    padding: 3rem;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    padding: 4rem;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {
+    padding: 5rem;
+  }
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {}
+
+  .title {
+    color: #01d6ff;
+  }
+
+  .options {
+    width: 12.5rem;
+    height: 3.2rem;
+    background: #ffffff;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ant-select-selector {
+    border: none !important;
+    padding: 0 !important;
+  }
+}
+
+.search {
+  border-radius: 16px !important;
+  border: 3px solid #2A4884 !important;
+  box-shadow: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  background: #fff !important;
+  color: #000000;
+  // opacity: 0.7; 
+
+  ::placeholder {
+    color: #4D4D4D !important;
+  }
+
+  .ant-input-affix-wrapper,
+  .ant-input {
+    background: #ffffff !important;
+  }
+
+  .ant-input-prefix {
+    padding-left: 32px !important;
+  }
+}
+
+.cards-content {}
+
+.radio {
+  padding: 0 8px !important;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    padding: 0 8px !important;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {}
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    padding: 0 4px !important;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {}
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {}
+
+  &__btn {
+    overflow: hidden;
+    text-align: center;
+    max-width: 180px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    box-shadow: 0px 0px 0px 1px #000000;
+    line-height: 36px !important;
+    height: 40px !important;
+    padding: 0px 4px;
+    width: 180px;
+    width: 27%;
+
+    .ant-radio-button {}
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      line-height: 36px !important;
+      height: 40px !important;
+      padding: 0px 6px;
+      width: 27%;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      line-height: 40px !important;
+      height: 44px !important;
+      padding: 0px 8px;
+      width: 28%;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      line-height: 46px !important;
+      height: 50px !important;
+      padding: 0px 12px;
+      width: 25%;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      line-height: 50px !important;
+      height: 54px !important;
+      padding: 0px 16px;
+      width: 22%;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+}
+
+// FILTER
+.filter {
+  padding: 20px;
+  background: #222222;
+  border-radius: 15px;
+  height: max-content;
+
+  &__panel {
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 13px;
+
+    svg,
+    .anticon,
+    .anticon-right,
+    .ant-collapse-arrow {
+      fill: #fff !important;
+    }
+  }
+  
+  .ant-input,
+  &__input {
+    background: #171717 ;
+    border: none !important;
+    border-radius: 0px !important;
+    color: #ffffff;
+  }
+  &__select {
+    background: #171717 !important ;
+    border: none !important;
+    border-radius: 0px !important;
+    color: #ffffff;
+  }
+
+  ::placeholder {
+    color: #605d5d;
+  }
+
+  .ant-checkbox-inner {
+    background: #333333 !important;
+    border: 1px solid #5d5d5d !important;
+    border-radius: 2px;
+  }
+
+  &__checkboxes {
+    gap: 10px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: baseline !important;
+    flex-direction: column !important;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 10px;
+    color: #605D5D !important;
+
+    span {
+      color: #605D5D !important;
+    }
+
+    .ant-checkbox-inner {
+      background: #333333 !important;
+    }
+  }
+
+  .ant-checkbox-wrapper {
+    span {
+      color: #605d5d !important;
+    }
+  }
+}
+
+.btn-green {
+  width: 231px;
+  max-width: 85%;
+  height: 33px;
+  margin-top: 15px;
+  outline: none;
+  border: 0;
+  background: #59F83F;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: #000000;
+
+  &:hover {
+    color: #000000;
+    background: darken(#59F83F, 10%);
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 426px) {
+  .DiscoverGigs {
+    padding: 40px !important;
+
+    .options {
+      width: 6.5rem;
+      height: 2.6rem;
+    }
+  }
+}
+
+@media screen and (min-width: 427px) and (max-width: 765px) {
+  .DiscoverGigs {
+    .options {
+      width: 6.5rem;
+      height: 2.6rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .DiscoverGigs {
+    padding: 60px 30px !important;
+  }
+
+  .filters {
+    padding: 12px !important;
+  }
+}
+
+
+.customSelect {
+
+  
+  :global {
+    
+    .ant-select-selector{
+      background-color: #171717 !important;
+      border: none !important;
+      border-radius: 0% !important;
+      color:white;
+      height: 35px;
+    };
+    .ant-select-selection-item{
+      color: black !important;
+    };
+    .anticon anticon-close{
+      color: black !important;
+    };
+    .ant-select-dropdown-hidden{
+      visibility: hidden !important;
+     
+      background-color: rebeccapurple
+    }
+    :where(.css-dev-only-do-not-override-1i536d8).ant-select-dropdown-hidden{
+      visibility: hidden !important;
+      // display: none !important;
+    }
+    // .ant-select-selection {
+    //   background-color: #000000;
+    //   max-height: 51px;
+    //   overflow: auto;
+    // }
+  }
+}

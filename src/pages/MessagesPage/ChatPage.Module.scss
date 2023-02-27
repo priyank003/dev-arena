@@ -1,0 +1,408 @@
+.ChatPage {
+  .ant-layout {
+    min-height: calc(100vh - 48px);
+    // overflow: hidden;
+
+    .ant-layout-header {
+      background: lighten(#120b23, 5%) !important;
+    }
+
+    .ant-layout-sider {
+      background: #212229 !important;
+      display: flex;
+      align-items: center;
+
+      &-children {
+        width: 100% !important;
+      }
+
+      .ant-input-affix-wrapper {
+        background: black !important;
+        border: none !important;
+
+        ::placeholder {
+          color: #8899a8;
+        }
+
+        .ant-input-prefix {
+          color: #8899a8;
+        }
+      }
+
+      .ant-menu {
+        background: none !important;
+        color: white !important;
+        margin: auto;
+
+        .ant-menu-item {
+          height: 100%;
+        }
+
+        li {
+          padding: 5px 10px !important;
+        }
+
+        .ant-menu-item-selected {
+          background: #120b23 !important;
+        }
+      }
+    }
+
+    .ant-layout-content {
+      margin: 0 !important;
+      background: #120B23;
+      min-height: max-content !important;
+      padding: 16px 16px !important;
+
+      // Small devices (landscape phones, 576px and up)
+      @media (min-width: 576px) {
+        padding: 18px 18px !important;
+      }
+
+      // Medium devices (tablets, 768px and up)
+      @media (min-width: 768px) {
+        padding: 19px 20px !important;
+      }
+
+      // Large devices (desktops, 992px and up)
+      @media (min-width: 992px) {
+        padding: 20px 25px !important;
+      }
+
+      // X-Large devices (large desktops, 1200px and up)
+      @media (min-width: 1200px) {
+        padding: 20px 30px !important;
+      }
+
+      // XX-Large devices (larger desktops, 1400px and up)
+      @media (min-width: 1400px) {}
+
+      .messageBox {
+        width: max-content;
+        height: auto;
+        background: #1e1f25;
+        border-radius: 5px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+
+        span {
+          color: #768396;
+        }
+
+        min-width:100px !important;
+
+        // Small devices (landscape phones, 576px and up)
+        @media (min-width: 576px) {
+          min-width: 150px !important;
+        }
+
+        // Medium devices (tablets, 768px and up)
+        @media (min-width: 768px) {
+          min-width: 200px !important;
+        }
+
+        // Large devices (desktops, 992px and up)
+        @media (min-width: 992px) {
+          min-width: 250px !important;
+        }
+
+        // X-Large devices (large desktops, 1200px and up)
+        @media (min-width: 1200px) {}
+
+        // XX-Large devices (larger desktops, 1400px and up)
+        @media (min-width: 1400px) {}
+      }
+    }
+
+    .ant-layout-footer {
+      .messageArea {
+        background: #282932;
+        display: flex;
+        align-items: center;
+        padding: 0 25px;
+
+        .ant-input-affix-wrapper {
+          color: white !important;
+          border: none !important;
+
+          .ant-input {
+            color: white !important;
+          }
+
+          .ant-input-suffix {
+            color: white !important;
+            margin-left: -15% !important;
+            z-index: 1 !important;
+
+            svg {
+              size: 20px !important;
+            }
+          }
+        }
+
+        input {
+          height: 46.74px;
+          background: #1e1f25 !important;
+          border-radius: 25px !important;
+          padding-left: 2rem;
+          padding-right: 1rem;
+        }
+
+        ::placeholder {
+          color: #8899a8;
+        }
+      }
+    }
+  }
+}
+
+.chat__sidebar {
+  padding: 10px !important;
+  min-width: 12% !important;
+  max-width: 85px !important;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    padding: 12px !important;
+    min-width: 12% !important;
+    max-width: 85px !important;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+    padding: 15px !important;
+    min-width: 15% !important;
+    max-width: 200px !important;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    padding: 20px !important;
+    min-width: 20% !important;
+    max-width: 250px !important;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {
+    min-width: 28% !important;
+    max-width: 320px !important;
+  }
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {
+    min-width: 28% !important;
+    max-width: 320px !important;
+  }
+
+  // sidebarTitle
+  .sidebarTitle {
+    font-size: 12px !important;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      font-size: 13px !important;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      font-size: 18px !important;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      font-size: 22px !important;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      font-size: 24px !important;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+
+  // All Message text
+  span.all-msgs {
+    display: none;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      display: none;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      display: none;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      display: inline-block;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {}
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+}
+
+.ant-list-item-meta-content {
+  display: none;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    display: none;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    display: block;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {
+    display: block;
+  }
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {}
+}
+
+.chat-layout {
+
+  
+}
+
+.ant-badge-count {
+  border: 0;
+}
+
+.chat-content {
+  background: #120b23 !important;
+  padding: 10px 20px !important;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    padding: 10px 20px !important;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+    padding: 20px 25px !important;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    padding: 20px 30px !important;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {}
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {}
+
+  .chat-title {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      font-size: 19px !important;
+      line-height: 1.3 !important;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      font-size: 20px !important;
+      line-height: 1.3 !important;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      font-size: 24px !important;
+      line-height: 1.3 !important;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {}
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background: #141418;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #35363f;
+    border-radius: 4px;
+  }
+}
+
+.search-msg {
+  display: none;
+
+  .ant-input {
+    background: #000000 !important;
+  }
+
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) {
+    display: block;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    display: flex;
+  }
+
+  // X-Large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) {}
+
+  // XX-Large devices (larger desktops, 1400px and up)
+  @media (min-width: 1400px) {}
+}
+
+#scrollableDiv {
+  padding-right: 10px;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 2px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(#120B23, 0.75);
+    border-radius: 2px;
+  }
+}

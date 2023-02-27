@@ -1,0 +1,63 @@
+.DevelopersPage {
+  textAlign:center;
+    margin:auto;
+    width: 90%;
+  @media screen and (min-width: 100px) and (max-width: 426px) {
+    padding: 10px !important;
+  }
+
+  @media screen and (min-width: 426px) and (max-width: 1024px) {
+    padding: 0px 0px !important;
+  
+  }
+
+  .title {
+    color: #01d6ff;
+  }
+
+  .ant-select-selector {}
+
+  .ant-radio-button-wrapper {}
+
+}
+
+.radio {
+  &__item {
+    width: 9.3rem;
+    height: 3rem;
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (min-width: 100px) and (max-width: 426px) {
+      height: 40px;
+    }
+  }
+}
+
+.load-posts-wrapper {
+  display: flex;
+  justify-content: center;
+
+}
+
+.load-posts {
+  text-align: center;
+  outline: none;
+  border: 0;
+  font-size: 16px;
+  line-height: 26px;
+  color: #fff;
+  background: #537CE6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: darken(#537CE6, 7%);
+  }
+}

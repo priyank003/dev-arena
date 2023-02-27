@@ -1,0 +1,95 @@
+.cl {
+  align-items: center !important;
+  padding: 8px 10px 8px 5px !important;
+  margin-bottom: 10px;
+  min-width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+
+  &[active],
+  &--active,
+  &:hover {
+    background-color: #18191f;
+  }
+
+  &__meta {
+    align-items: center !important;
+    color: #A9ABAD !important;
+  }
+
+  &__avatar {}
+
+  &__status {}
+
+  &__time {
+    color: #A9ABAD;
+    margin-bottom: 6px !important;
+  }
+
+  &__msg {
+    font-weight: 400;
+    font-size: 14px;
+ 
+    color: #A9ABAD;
+    display: block;
+    text-align: left;
+  }
+
+  &__name {
+    text-align: left;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    color: #E9E9E9 !important;
+    margin-bottom: 3px !important;
+    
+  }
+
+  &__unreadCount {
+    display: inline-block !important;
+    line-height: 1 !important;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  &__info {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+    display: none;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 350px) {
+    display: flex;
+    color: #E9E9E9 !important;
+    &__name {
+      display: flex;
+      color: #D2D2D2 !important;
+    }
+    
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      display: flex;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      display: flex;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      display: flex;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+}
+
+.ant-list-item-meta-description {
+  line-height: 1 !important;
+}

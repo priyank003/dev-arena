@@ -1,0 +1,223 @@
+.chat {
+  padding-left: 10px;
+  padding-right: 15%;
+  margin-bottom: 10px;
+
+  .ant-image-img {
+    max-width: 80% !important;
+  }
+
+  &__meta {
+    min-width: 100px;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      min-width: 110px;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      min-width: 140px;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      min-width: 200px;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      min-width: 240px;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+
+  &__message {
+    height: auto;
+    background: #1e1f25;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    width: auto;
+    line-height: 18px;
+    font-size: 10px !important;
+    min-width: 100px;
+    padding: 6px 6px;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      width: auto;
+      line-height: 18px;
+      font-size: 11px !important;
+      min-width: 110px;
+      padding: 8px 8px;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      width: auto;
+      line-height: 20px;
+      font-size: 13px !important;
+      min-width: 140px;
+      padding: 8px 10px;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      width: max-content;
+      line-height: 22px;
+      font-size: 14px;
+      min-width: 200px;
+      padding: 10px 12px;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      width: max-content;
+      line-height: 22px;
+      font-size: 14px;
+      min-width: 240px;
+      padding: 12px 14px;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+
+    span {
+      color: #9aa4b4;
+      line-height: 18px;
+      font-size: 10px !important;
+
+      // Small devices (landscape phones, 576px and up)
+      @media (min-width: 576px) {
+        line-height: 18px;
+        font-size: 11px !important;
+      }
+
+      // Medium devices (tablets, 768px and up)
+      @media (min-width: 768px) {
+        line-height: 20px;
+        font-size: 13px !important;
+      }
+
+      // Large devices (desktops, 992px and up)
+      @media (min-width: 992px) {
+        line-height: 22px;
+        font-size: 14px;
+      }
+
+      // X-Large devices (large desktops, 1200px and up)
+      @media (min-width: 1200px) {
+        line-height: 22px;
+        font-size: 14px;
+      }
+
+      // XX-Large devices (larger desktops, 1400px and up)
+      @media (min-width: 1400px) {}
+    }
+  }
+
+  &__name {
+    font-weight: 700;
+    color: white !important;
+    font-size: 9px;
+    line-height: 18px;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      font-size: 10px;
+      line-height: 18px;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      font-size: 16px;
+      line-height: 21px;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+
+  &__lname {
+    display: none;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      display: none;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      display: none;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      display: inline-block;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {}
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+  }
+
+  &__time {
+    font-weight: 700;
+    color: #7C8B9F !important;
+    margin-left: 1rem;
+    font-size: 8px;
+    line-height: 18px;
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) {
+      margin-left: 1.5rem;
+      font-size: 9px;
+      line-height: 18px;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      margin-left: 2rem;
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      margin-left: 2.5rem;
+      font-size: 15px;
+      line-height: 20px;
+    }
+
+    // X-Large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      margin-left: 3rem;
+      font-size: 16px;
+      line-height: 21px;
+    }
+
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) {}
+
+    span {
+      color: #9aa4b4;
+    }
+  }
+}

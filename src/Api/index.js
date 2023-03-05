@@ -19,10 +19,13 @@ export const refreshToken = (data) => API.post("/auth/refresh-tokens", data);
 /*users*/
 
 export const getUser = (data) => API.get(`/users/${data}`);
-export const getUserByUsername = (username) => API.get(`/users/${username}`);
+export const getUserByUsername = (username) =>
+  API.get(`/users/profile/${username}`);
 export const updateUser = (id, data) => API.patch(`/users/${id}`, data);
 export const deleteUser = (id) => API.delete(`/users/${id}`);
 export const searchUsers = (q) => API.get(`/users/search?q=${q}`);
+export const uploadUserAvatar = (data) => API.post("/users/avatar", data);
+export const followUser = (id) => API.get(`/users/follow/${id}`);
 /*posts*/
 
 export const addPost = (data) => API.post(`/posts`, data);
@@ -54,6 +57,11 @@ export const searchJobs = (q, filter) =>
 export const updateJob = (id, data) => API.patch(`/jobs/${id}`, data);
 
 /*conversations*/
+
+export const getUsers = () => API.get("/conversations/users");
+export const getConversation = (receiver) =>
+  API.get(`/conversations/get/${receiver}`);
+export const getConversations = () => API.get("/conversations");
 
 export const newConversation = (data) => API.post(`/conversations/init`, data);
 export const getMessagesInConversation = (id) =>

@@ -198,7 +198,7 @@ export default function AppBar() {
             </Col> */}
 
             <Col>
-              <Link to="/profile">
+              <Link to={`/profile/${data.username}`}>
                 <Avatar
                   icon={<UserOutlined />}
                   src="https://joeschmoe.io/api/v1/random"

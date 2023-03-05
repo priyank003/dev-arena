@@ -227,7 +227,9 @@ function SkillsPage() {
                   />
                   <Divider type="vertical"></Divider>
                   <Space direction="horizontal" size="middle">
-                    <Text type="secondary">{postData?.author?.name}</Text>
+                    <Link to={`/profile/${postData?.author?.username}`}>
+                      <Text type="secondary">{postData?.author?.name}</Text>
+                    </Link>
                     <BsChat size="18px" />
                     <FiUserPlus size="18px" />
                   </Space>

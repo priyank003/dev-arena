@@ -16,12 +16,10 @@ import chatImage from "./msgImg.png";
 import { ReactComponent as MenuIcon } from "./menuicon.svg";
 const { Title, Text } = Typography;
 
-export default function MessagesItem({ date, name, avatar, MsgsArray }) {
-  useEffect(() => {}, []);
-
+export default function MessagesItem({ MsgsArray, currentUser, receiver }) {
   return (
     <>
-      <Divider
+      {/* <Divider
         plain
         style={{
           fontWeight: "500",
@@ -32,24 +30,24 @@ export default function MessagesItem({ date, name, avatar, MsgsArray }) {
         }}
       >
         {date}
-      </Divider>
+      </Divider> */}
       {MsgsArray?.map((msg, index) => {
         return (
           <>
-            {msg.status === "recieved" ? (
-              <ReplyMessage
+            {msg.sender.id === currentUser.id ? (
+              <SentMessage
                 key={index}
-                date={date}
-                name={name}
-                avatar={avatar}
+                date={msg.postedAt}
+                name={msg.sender.name}
+                avatar={msg.sender.avatar.pathUrl}
                 msg={msg}
               />
             ) : (
-              <SentMessage
+              <ReplyMessage
                 key={index}
-                date={date}
-                name={name}
-                avatar={avatar}
+                date={msg.postedAt}
+                name={msg.receiver.name}
+                avatar={msg.receiver.avatar.pathUrl}
                 msg={msg}
               />
             )}
@@ -100,7 +98,7 @@ function SentMessage({ date, name, avatar, msg }) {
                     {index === 0 ? (
                       <> {char} </>
                     ) : (
-                      <span  className={css["chat__lname"]} key={index}>
+                      <span className={css["chat__lname"]} key={index}>
                         {" "}
                         {char}
                       </span>
@@ -211,7 +209,7 @@ function ReplyMessage({ date, name, avatar, msg }) {
                     {index === 0 ? (
                       <> {char} </>
                     ) : (
-                      <span  className={css["chat__lname"]} key={index}>
+                      <span className={css["chat__lname"]} key={index}>
                         {" "}
                         {char}{" "}
                       </span>

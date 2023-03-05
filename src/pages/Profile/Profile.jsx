@@ -13,6 +13,8 @@ import {
   Divider,
   List,
   Popover,
+  Upload,
+  Modal,
 } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { profile } from "../../utils/data";
@@ -31,37 +33,52 @@ import { Co } from "react-flags-select";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "../../redux/Slices/toastSlice";
 import { toast } from "react-hot-toast";
-import { getUser,getUserByUsername } from "../../Api/index";
+import {
+  getUser,
+  getUserByUsername,
+  uploadUserAvatar,
+  followUser,
+} from "../../Api/index";
 import Moment from "react-moment";
+import AvatarUpload from "../../components/UserAvatar/UserAvatar";
+import defaultAvatar from "../../assets/Profile Images/deafult_avatar.png";
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 const { useBreakpoint } = Grid;
+const { Dragger } = Upload;
 
 export default function Profile() {
   const { username } = useParams();
-  const value = useSelector((store) => store.user);
+  const currentUser = useSelector((store) => store.user);
   useEffect(() => {}, []);
-  console.log(value);
+
   const dispatch = useDispatch();
   const userProfile = profile();
   const screens = useBreakpoint();
 
   const ContainerHeight = 400;
+  const [avatarModel, setAvatarModel] = useState(false);
+  const [images, setImages] = useState([]);
+  const userAvatarConfig = {
+    name: "file",
+
+    onChange(info) {
+      console.log(info.fileList);
+      setImages(info.fileList);
+    },
+    onDrop(e) {},
+  };
+
   const [userData, setUserData] = useState([]);
   const appendData = async () => {
     const userRes = await getUserByUsername(username);
+
     setUserData(userRes.data);
-    // fetch(fakeDataUrl)
-    //   .then((res) => res.json())
-    //   .then((body) => {
-    //     setData(data.concat(body.results));
-    //     message.success(`${body.results.length} more items loaded!`);
-    //   });
   };
   useEffect(() => {
     appendData();
-  }, []);
+  }, [username]);
   const onScroll = (e) => {
     if (
       e.currentTarget.scrollHeight - e.currentTarget.scrollTop ===
@@ -71,75 +88,67 @@ export default function Profile() {
     }
   };
 
+  const [userAvatar, setUserAvatar] = useState();
+
   // const value1 = useSelector((store) => store.toast);
   // console.log(value1);
   // if (value1.isOpen) {
   // 	console.log("Hasnat");
   // 	alert("my name is hasnat");
   // }
+  const getImageHandler = (file) => {
+    setUserAvatar(file);
+  };
+
+  const postUserAvatar = async () => {
+    let formData = new FormData();
+
+    formData.append("media", userAvatar);
+
+    const res = await uploadUserAvatar(formData);
+
+    setUserData((prev) => {
+      return { ...prev, avatar: res.data.avatar };
+    });
+
+    setAvatarModel(false);
+  };
+
+  const followHandler = async () => {
+    const res = await followUser(userData.id);
+    console.log(res);
+  };
 
   const content = (
     <List style={{ width: "500px" }}>
-      <VirtualList
-        data={userData}
-        height={ContainerHeight}
-        itemHeight={47}
-        itemKey="email"
-        onScroll={onScroll}
-      >
-        {(item) => (
-          <List.Item key={item.email} style={{ cursor: "pointer" }}>
+      {userData?.followers?.map((item) => {
+        return (
+          <List.Item key={item.username}>
             <List.Item.Meta
-              avatar={<Avatar src={item.picture.large} />}
-              title={<a href="#">{item.name.last}</a>}
+              avatar={<Avatar src={item?.avatar?.pathUrl} />}
+              title={<Link to={`/profile/${item?.username}`}>{item.name}</Link>}
               description={item.email}
             />
-            <div
-              style={{
-                border: "1px solid black",
-                width: "120px",
-                textAlign: "center",
-                padding: "3px",
-                borderRadius: "20px",
-              }}
-            >
-              Followers
-            </div>
+            {/* <div>Content</div> */}
           </List.Item>
-        )}
-      </VirtualList>
+        );
+      })}
     </List>
   );
   const content2 = (
     <List style={{ width: "500px" }}>
-      <VirtualList
-        data={userData}
-        height={ContainerHeight}
-        itemHeight={47}
-        itemKey="email"
-        onScroll={onScroll}
-      >
-        {(item) => (
-          <List.Item key={item.email} style={{ cursor: "pointer" }}>
+      {userData?.following?.map((item) => {
+        return (
+          <List.Item key={item.username}>
             <List.Item.Meta
-              avatar={<Avatar src={item.picture.large} />}
-              title={<a href="#">{item.name.last}</a>}
+              avatar={<Avatar src={item?.avatar?.pathUrl} />}
+              title={<Link to={`/profile/${item?.username}`}>{item.name}</Link>}
               description={item.email}
             />
-            <div
-              style={{
-                border: "1px solid black",
-                width: "120px",
-                textAlign: "center",
-                padding: "3px",
-                borderRadius: "20px",
-              }}
-            >
-              Following
-            </div>
+            {/* <div>Content</div> */}
           </List.Item>
-        )}
-      </VirtualList>
+        );
+      })}
     </List>
   );
 
@@ -182,20 +191,31 @@ export default function Profile() {
               size="large"
               shape="square"
               icon={<UserOutlined />}
-              src={avatar}
+              src={userData.avatar ? userData.avatar.pathUrl : defaultAvatar}
               style={{ boxShadow: "10px 20px 20px black !important" }}
             />
+            {userData.id === currentUser.id && (
+              <FloatButton
+                style={{
+                  position: "initial",
+                  top: "20px",
+                  marginTop: "90px",
+                  marginLeft: "-25px",
+                }}
+                icon={<EditOutlined />}
+                type="default"
+                onClick={() => setAvatarModel(true)}
+              />
+            )}
 
-            <FloatButton
-              style={{
-                position: "initial",
-                top: "20px",
-                marginTop: "90px",
-                marginLeft: "-25px",
-              }}
-              icon={<EditOutlined />}
-              type="default"
-            />
+            <Modal
+              title="Basic Modal"
+              open={avatarModel}
+              onOk={postUserAvatar}
+              onCancel={() => setAvatarModel(false)}
+            >
+              <AvatarUpload getImage={getImageHandler} />
+            </Modal>
           </Col>
 
           <Col span={24} className="editIcons">
@@ -247,7 +267,7 @@ export default function Profile() {
               >
                 <Text>
                   <span className="name" style={{ color: "white" }}>
-                    {value?.name}
+                    {userData?.name}
                   </span>
                   {/* <span className="location">
                     &nbsp; <BiLocationPlus /> &nbsp;
@@ -255,7 +275,7 @@ export default function Profile() {
                   </span> */}
                 </Text>
 
-                <Text className="username">@{value?.username}</Text>
+                <Text className="username">@{userData?.username}</Text>
 
                 <Space
                   direction="horizontal"
@@ -348,7 +368,11 @@ export default function Profile() {
                 // direction={screens.xs ? "vertical" : "horizontal"}
                 size="large"
               >
-                <button className="follow-btn">
+                <button
+                  className="follow-btn"
+                  onClick={followHandler}
+                  style={{ cursor: "pointer" }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

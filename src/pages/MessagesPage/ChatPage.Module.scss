@@ -50,7 +50,7 @@
 
     .ant-layout-content {
       margin: 0 !important;
-      background: #120B23;
+      background: #120b23;
       min-height: max-content !important;
       padding: 16px 16px !important;
 
@@ -75,7 +75,8 @@
       }
 
       // XX-Large devices (larger desktops, 1400px and up)
-      @media (min-width: 1400px) {}
+      @media (min-width: 1400px) {
+      }
 
       .messageBox {
         width: max-content;
@@ -90,7 +91,7 @@
           color: #768396;
         }
 
-        min-width:100px !important;
+        min-width: 100px !important;
 
         // Small devices (landscape phones, 576px and up)
         @media (min-width: 576px) {
@@ -108,10 +109,12 @@
         }
 
         // X-Large devices (large desktops, 1200px and up)
-        @media (min-width: 1200px) {}
+        @media (min-width: 1200px) {
+        }
 
         // XX-Large devices (larger desktops, 1400px and up)
-        @media (min-width: 1400px) {}
+        @media (min-width: 1400px) {
+        }
       }
     }
 
@@ -220,7 +223,8 @@
     }
 
     // XX-Large devices (larger desktops, 1400px and up)
-    @media (min-width: 1400px) {}
+    @media (min-width: 1400px) {
+    }
   }
 
   // All Message text
@@ -243,10 +247,12 @@
     }
 
     // X-Large devices (large desktops, 1200px and up)
-    @media (min-width: 1200px) {}
+    @media (min-width: 1200px) {
+    }
 
     // XX-Large devices (larger desktops, 1400px and up)
-    @media (min-width: 1400px) {}
+    @media (min-width: 1400px) {
+    }
   }
 }
 
@@ -274,12 +280,11 @@
   }
 
   // XX-Large devices (larger desktops, 1400px and up)
-  @media (min-width: 1400px) {}
+  @media (min-width: 1400px) {
+  }
 }
 
 .chat-layout {
-
-  
 }
 
 .ant-badge-count {
@@ -306,10 +311,12 @@
   }
 
   // X-Large devices (large desktops, 1200px and up)
-  @media (min-width: 1200px) {}
+  @media (min-width: 1200px) {
+  }
 
   // XX-Large devices (larger desktops, 1400px and up)
-  @media (min-width: 1400px) {}
+  @media (min-width: 1400px) {
+  }
 
   .chat-title {
     font-size: 18px !important;
@@ -334,10 +341,12 @@
     }
 
     // X-Large devices (large desktops, 1200px and up)
-    @media (min-width: 1200px) {}
+    @media (min-width: 1200px) {
+    }
 
     // XX-Large devices (larger desktops, 1400px and up)
-    @media (min-width: 1400px) {}
+    @media (min-width: 1400px) {
+    }
   }
 
   /* width */
@@ -381,10 +390,12 @@
   }
 
   // X-Large devices (large desktops, 1200px and up)
-  @media (min-width: 1200px) {}
+  @media (min-width: 1200px) {
+  }
 
   // XX-Large devices (larger desktops, 1400px and up)
-  @media (min-width: 1400px) {}
+  @media (min-width: 1400px) {
+  }
 }
 
 #scrollableDiv {
@@ -402,7 +413,7 @@
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: rgba(#120B23, 0.75);
+    background: rgba(#120b23, 0.75);
     border-radius: 2px;
   }
 }

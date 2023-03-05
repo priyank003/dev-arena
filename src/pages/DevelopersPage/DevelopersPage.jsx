@@ -41,7 +41,7 @@ export default function DevelopersPage() {
         data?.data?.results.map((ele, index) => {
           projects.push({
             projectName: ele.title,
-            author: `By ${ele.author.username}`,
+            author: ele.author,
             cover: `${ele.media[0]?.pathUrl}`,
             logo: "",
             likes: ele.likesCount,
@@ -118,8 +118,6 @@ export default function DevelopersPage() {
 
     setQuery(filter_url);
   }, [tagsFilter, toolsFilter]);
-
-
 
   return (
     <section

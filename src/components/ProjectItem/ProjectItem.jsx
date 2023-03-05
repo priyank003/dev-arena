@@ -9,7 +9,7 @@ const { Meta } = Card;
 const { Text, Title } = Typography;
 
 export default function ProjectItem({ project }) {
-  
+  console.log("project author", project.author);
   const navigate = useNavigate();
   return (
     <Card
@@ -27,7 +27,12 @@ export default function ProjectItem({ project }) {
     >
       <Meta
         style={{ marginTop: "5px" }}
-        avatar={<Avatar className={css["card__avatar"]} src={avatar} />}
+        avatar={
+          <Avatar
+            className={css["card__avatar"]}
+            src={project.author.avatar ? project.author.avatar.pathUrl : avatar}
+          />
+        }
         title={
           <Col span={24}>
             <Row
@@ -48,7 +53,7 @@ export default function ProjectItem({ project }) {
                   {project?.projectName}
                 </Text>
                 <Text className={css["card__author"]} type="secondary">
-                  {project?.author}
+                  By {project?.author.username}
                 </Text>
               </Col>
 

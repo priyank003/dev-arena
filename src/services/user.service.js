@@ -43,7 +43,7 @@ const getUserById = async (id) => {
 };
 
 const getUserByUsername = async (username) => {
-  return User.findOne({ username: username });
+  return User.findOne({ username: username }).populate('followers').populate('following');
 };
 
 /**
@@ -110,6 +110,16 @@ const searchUsers = async (q) => {
   return searchResults;
 };
 
+const uploadAvatar = async (userId, media) => {
+  await User.updateOne(
+    { _id: userId },
+    {
+      avatar: media,
+    },
+    { upsert: true }
+  );
+};
+
 module.exports = {
   createUser,
   queryUsers,
@@ -122,4 +132,5 @@ module.exports = {
   patchUserById,
   findByFilter,
   searchUsers,
+  uploadAvatar,
 };

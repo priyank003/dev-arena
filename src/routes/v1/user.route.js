@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
+const upload = require('../../middlewares/storage');
 const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/user.controller');
 
@@ -19,7 +20,14 @@ router
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
-router.route('/:username').get(auth('getUsers'), validate(userValidation.getUserByUsername), userController.getUserByUsername);
+router
+  .route('/profile/:username')
+  .get(auth('getUsers'), validate(userValidation.getUserByUsername), userController.getUserByUsername);
+
+router.route('/avatar').post(auth('getUsers'), upload.single('media'), userController.uploadAvatar);
+
+router.route('/follow/:userId').get(auth('getUsers'),userController.followUser );
+
 module.exports = router;
 
 /**

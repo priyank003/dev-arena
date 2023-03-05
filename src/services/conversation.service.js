@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { Message, Conversation } = require('../models');
+const { Message, Conversation, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -32,13 +32,21 @@ const createConversation = async (conversationBody) => {
  */
 const queryMessagesByConversationId = async (filter, options) => {
   const messages = await Message.paginate(filter, options);
+
   return messages;
 };
 
 const getConversationsByUserId = async (userId) => {
-  return Conversation.find({ members: userId }).populate({
-    path: 'members',
-  });
+  return Conversation.find({ members: userId })
+    .populate({
+      path: 'members',
+    })
+    .populate({
+      path: 'messages',
+      populate:{
+        path:"sender receiver"
+      }
+    });
 };
 /**
  * Get message by userId
@@ -68,6 +76,19 @@ const readMessages = async (messageIds) => {
   );
 };
 
+const getUsers = async (userId) => {
+  return await User.find({ _id: { $ne: userId } });
+};
+
+const getConversation = async (convobody) => {
+  const { members } = convobody;
+  console.log('memebrs', members);
+  const conversation = await Conversation.findOne({ members: { $all: members } });
+  console.log('convo', conversation);
+
+  return conversation;
+};
+
 module.exports = {
   createMessage,
   createConversation,
@@ -76,4 +97,6 @@ module.exports = {
   updateConversationById,
   getConversationsByUserId,
   readMessages,
+  getUsers,
+  getConversation,
 };

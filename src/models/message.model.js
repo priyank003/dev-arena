@@ -1,26 +1,32 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const messageSchema = mongoose.Schema({
-  conversationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation' },
-  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  text: {
-    type: String,
-    trim: true,
-    minlength: 1,
+const messageSchema = mongoose.Schema(
+  {
+    conversationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation' },
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    text: {
+      type: String,
+      trim: true,
+      minlength: 1,
+    },
+    messageType: {
+      type: String,
+      enum: ['text', 'media'],
+      default: 'text',
+      required: true,
+    },
+    receiver: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    mediaUrl: {
+      type: String,
+    },
+    read: { type: Boolean, default: false },
+    postedAt: { type: Date, default: Date.now },
   },
-  messageType: {
-    type: String,
-    enum: ['text', 'media'],
-    default: 'text',
-    required: true,
-  },
-  receiver: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  mediaUrl: {
-    type: String,
-  },
-  read: { type: Boolean, default: false },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // add plugin that converts mongoose to json
 messageSchema.plugin(toJSON);

@@ -1,9 +1,11 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const pick = require('../utils/pick');
-const { conversationService, socketService } = require('../services');
+const { conversationService, socketService, userService } = require('../services');
 
 const initiateConversation = catchAsync(async (req, res) => {
+  console.log('initiate convo');
+
   const conversationBody = {
     members: [req.user.id, req.body.receiverId],
   };
@@ -31,8 +33,12 @@ const sendMessage = catchAsync(async (req, res) => {
   };
 
   const message = await conversationService.createMessage(messagebody);
+
   const update = {
     $inc: { messageCount: 1 },
+    $push: {
+      messages: message._id,
+    },
   };
 
   await conversationService.updateConversationById(req.body.conversationId, update);
@@ -53,6 +59,7 @@ const getUserConversations = catchAsync(async (req, res) => {
 const getMessagesForConversation = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['conversationId']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  options.populate = 'sender,receiver';
   const result = await conversationService.queryMessagesByConversationId(filter, options);
   res.send(result);
 });
@@ -70,10 +77,29 @@ const readMessages = catchAsync(async (req, res) => {
   res.sendStatus(httpStatus.OK);
 });
 
+const getUsers = async (req, res) => {
+  const userId = req.user.id;
+
+  const users = await conversationService.getUsers(userId);
+
+  res.send(users);
+};
+
+const getConversation = async (req, res) => {
+  const conversationBody = {
+    members: [req.user.id, req.params.receiver],
+  };
+  const conversation = await conversationService.getConversation(conversationBody);
+
+  res.send(conversation);
+};
+
 module.exports = {
   sendMessage,
   readMessages,
   getMessagesForConversation,
   getUserConversations,
   initiateConversation,
+  getUsers,
+  getConversation,
 };

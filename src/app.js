@@ -56,9 +56,9 @@ if (config.env === 'production') {
 
 // v1 api routes
 
-app.get("/",(req,res)=>{
-  res.send("hello world")
-})
+app.get('/', (req, res) => {
+  res.send('hello world');
+});
 
 app.use('/api/v1', routes);
 

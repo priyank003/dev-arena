@@ -11,6 +11,10 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    avatar: {
+      fileType: String,
+      pathUrl: String,
+    },
     email: {
       type: String,
       required: true,
@@ -112,6 +116,8 @@ const userSchema = mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    followers: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'User' }],
+    following: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'User' }],
     likedJobs: [{ type: String }],
     viewedJobs: [{ type: String }],
     likedPosts: [{ type: String }],

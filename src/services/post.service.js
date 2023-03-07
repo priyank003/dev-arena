@@ -21,13 +21,21 @@ const createPost = async (postBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryPosts = async (options) => {
-  console.log('options', options);
+
+const timeStampCalculation = {
+  past_24: 24 * 60 * 60 * 1000,
+
+  past_week: 24 * 60 * 60 * 1000,
+  past_month: 30 * 24 * 60 * 60 * 1000,
+};
+
+const queryPosts = async (options, userId) => {
+  const followings = await User.find({ _id: userId }, { following: 1, _id: 0 });
+
   let filter = {};
 
   if (options.filterBy) {
-    options.filterBy.split(',').forEach((filterOption) => {
-      console.log('filter option', filterOption);
+    options.filterBy.split(',').forEach(async (filterOption) => {
       const [key, val] = filterOption.split(':');
 
       if (val.includes('||')) {
@@ -43,13 +51,28 @@ const queryPosts = async (options) => {
         filter[key] = {
           $in: [...vals],
         };
+      } else if (key === 'posts') {
+        if (val === 'Followings') {
+          // console.log(userId);
+          let followingsList = [];
+
+          followings[0].following.map((item) => followingsList.push(`${item._id}`));
+          filter['author'] = {
+            $in: followingsList,
+          };
+        } else if (val === 'New') {
+          filter['createdAt'] = {
+            $gte: new Date(new Date() - timeStampCalculation.past_week),
+          };
+        } else if (val === 'Trending') {
+          options.sortBy = 'likesCount:desc';
+        }
       }
     });
   }
 
   const posts = await Post.paginate(filter, options);
 
-  // $or: [{ posterId: 'pd135c18182185cce' }, { posterId: 'p5ca593b4f8053731' }]
   return posts;
 };
 

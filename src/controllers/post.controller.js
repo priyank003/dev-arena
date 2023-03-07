@@ -27,6 +27,7 @@ const createPost = catchAsync(async (req, res) => {
     media: uploadData,
   };
   const post = await postService.createPost(postPayload);
+
   res.status(httpStatus.CREATED).send(post);
 });
 
@@ -34,7 +35,7 @@ const getPosts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'filterBy']);
   options.populate = 'author,comments';
 
-  const result = await postService.queryPosts(options);
+  const result = await postService.queryPosts(options, req.user.id);
 
   res.send(result);
 });
@@ -52,7 +53,17 @@ const likePost = catchAsync(async (req, res) => {
   const user = await userService.findByFilter(filter);
 
   if (user.length) {
-    throw new ApiError(httpStatus.CONFLICT, 'Post already liked');
+    const update = { $pull: { likedBy: req.user.id }, $inc: { likesCount: -1 } };
+    const post = await postService.patchPostById(req.params.postId, update);
+    if (!post) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'Post not found');
+    }
+
+    const userUpdate = { $pull: { likedPosts: req.params.postId } };
+    await userService.patchUserById(req.user.id, userUpdate);
+    console.log('unliked post');
+    return res.send('unliked');
+    // throw new ApiError(httpStatus.CONFLICT, 'Post already liked');
   }
 
   const update = { $push: { likedBy: req.user.id }, $inc: { likesCount: 1 } };
@@ -63,12 +74,12 @@ const likePost = catchAsync(async (req, res) => {
 
   const userUpdate = { $push: { likedPosts: req.params.postId } };
   await userService.patchUserById(req.user.id, userUpdate);
+  console.log('liked post');
 
-  res.sendStatus(httpStatus.OK);
+  return res.sendStatus(httpStatus.OK);
 });
 
 const viewPost = catchAsync(async (req, res) => {
-  console.log(req.params.postId);
   const filter = { _id: req.user.id, viewedPosts: req.params.postId };
   const user = await userService.findByFilter(filter);
 
@@ -110,6 +121,10 @@ const searchQueryPosts = catchAsync(async (req, res) => {
   // const limit = parseInt(req.query.limit) || 5;
 
   const options = pick(req.query, ['q', 'filterBy']);
+
+  if (options.q === '') {
+    throw new ApiError(httpStatus.NOT_FOUND, 'please enter a valid search');
+  }
 
   // let sort = req.query.sort || 'rating';
 

@@ -19,7 +19,7 @@ router
     validate(postValidation.createPost),
     postController.createPost
   )
-  .get(validate(postValidation.getPosts), postController.getPosts);
+  .get(auth('managePosts'), validate(postValidation.getPosts), postController.getPosts);
 
 router.get('/search', auth('managePosts'), postController.searchQueryPosts);
 

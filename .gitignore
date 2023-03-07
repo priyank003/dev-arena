@@ -1,6 +1,7 @@
 # Dependencies
 node_modules
 
+
 # yarn error logs
 yarn-error.log
 
@@ -12,3 +13,5 @@ yarn-error.log
 coverage
 
 #uploads
+
+backend_zip

@@ -16,7 +16,7 @@ const getPosts = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
-    filterBy: Joi.string(),
+    filterBy: Joi.string().allow(''),
   }),
 };
 

@@ -43,9 +43,9 @@ const getConversationsByUserId = async (userId) => {
     })
     .populate({
       path: 'messages',
-      populate:{
-        path:"sender receiver"
-      }
+      populate: {
+        path: 'sender receiver',
+      },
     });
 };
 /**

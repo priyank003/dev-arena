@@ -71,6 +71,7 @@ const likePost = catchAsync(async (req, res) => {
   if (!post) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Post not found');
   }
+  console.log(req.params.postId);
 
   const userUpdate = { $push: { likedPosts: req.params.postId } };
   await userService.patchUserById(req.user.id, userUpdate);

@@ -67,9 +67,14 @@ const queryPosts = async (options, userId) => {
         } else if (val === 'Trending') {
           options.sortBy = 'likesCount:desc';
         }
+        // filter[key] = val;
+      } else {
+        filter[key] = val;
       }
     });
   }
+
+  console.log(filter);
 
   const posts = await Post.paginate(filter, options);
 
@@ -135,7 +140,6 @@ const deletePostById = async (postId) => {
 };
 
 const patchPostById = async (postId, patch) => {
-  console.log(postId);
   return await Post.findOneAndUpdate({ posterId: postId }, patch);
 };
 

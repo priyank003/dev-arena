@@ -28,7 +28,6 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const getUserByUsername = catchAsync(async (req, res) => {
-  
   const user = await userService.getUserByUsername(req.params.username);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -84,7 +83,7 @@ const followUser = async (req, res) => {
 
     console.log('unfollowed user');
     res.status(httpStatus.OK).send({
-      msg: 'unfollowed user',
+      msg: 'unfollow',
     });
   } else {
     const followedUserUpdate = { $push: { followers: currentUser }, $inc: { followerCount: 1 } };
@@ -95,7 +94,7 @@ const followUser = async (req, res) => {
 
     console.log('followed user');
     res.status(httpStatus.OK).send({
-      msg: 'followed user',
+      msg: 'follow',
     });
   }
 };

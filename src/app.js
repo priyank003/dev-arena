@@ -21,6 +21,11 @@ if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
 
 // server static content
 app.use(express.static('public'));
@@ -42,8 +47,8 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // // enable cors
-app.use(cors());
-app.options('*', cors());
+// app.use(cors());
+// app.options('*', cors());
 // const corsOptions = {
 //   origin: '*',
 //   credentials: true,

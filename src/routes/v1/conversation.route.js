@@ -13,7 +13,7 @@ router.get('/users', auth('getConversations'), conversationController.getUsers);
 
 router.get('/', auth('getConversations'), conversationController.getUserConversations);
 
-router.get("/get/:receiver", auth("getConversations"), conversationController.getConversation )
+router.get('/get/:receiver', auth('getConversations'), conversationController.getConversation);
 
 router.post(
   '/init',

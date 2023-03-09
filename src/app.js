@@ -46,6 +46,7 @@ app.use(compression());
 // app.options('*', cors());
 const corsOptions = {
   origin: '*',
+  credentials: true,
 };
 app.use(cors(corsOptions));
 

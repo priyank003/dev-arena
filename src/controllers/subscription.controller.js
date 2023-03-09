@@ -22,8 +22,8 @@ const createCheckoutSession = catchAsync(async (req, res) => {
 });
 
 const setupSubscription = catchAsync(async (req, res) => {
-  console.log(req.query.sessionId)
-  const subscription = await subscriptionService.setupSubscription(req.query.sessionId,Number(req.query.credits));
+  console.log(req.query.sessionId);
+  const subscription = await subscriptionService.setupSubscription(req.query.sessionId, Number(req.query.credits));
   console.log(subscription);
 
   res.send(subscription);

@@ -50,12 +50,12 @@ const updateUser = {
       about: Joi.string(),
       location: Joi.string(),
       socials: {
-        twitter: Joi.string(),
-        gitlab: Joi.string(),
-        github: Joi.string(),
-        linkedin: Joi.string(),
-        behance: Joi.string(),
-        codepen: Joi.string(),
+        twitter: Joi.string().allow(null, ''),
+        gitlab: Joi.string().allow(null, ''),
+        github: Joi.string().allow(null, ''),
+        linkedin: Joi.string().allow(null, ''),
+        behance: Joi.string().allow(null, ''),
+        codepen: Joi.string().allow(null, ''),
       },
     })
     .min(1),

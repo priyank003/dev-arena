@@ -21,11 +21,10 @@ if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-  next();
-});
+const corsOptions = {
+  origin: 'https://git-visual-helpinghand03.vercel.app',
+};
+app.use(cors(corsOptions));
 
 // server static content
 app.use(express.static('public'));

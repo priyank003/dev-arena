@@ -41,9 +41,13 @@ app.use(mongoSanitize());
 // gzip compression
 app.use(compression());
 
-// enable cors
-app.use(cors());
-app.options('*', cors());
+// // enable cors
+// app.use(cors());
+// app.options('*', cors());
+const corsOptions = {
+  origin: '*',
+};
+app.use(cors(corsOptions));
 
 // jwt authentication
 app.use(passport.initialize());

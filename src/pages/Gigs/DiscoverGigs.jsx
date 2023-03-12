@@ -13,6 +13,7 @@ import {
   message,
   Card,
   Button,
+  Skeleton,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -244,35 +245,56 @@ export default function DiscoverGigs() {
               //   xs={{ span: 24, order: 2 }}
             >
               <Row gutter={[16, 24]}>
-                {jobsData?.map((job, key) => {
-                  return (
-                    <Col
-                      key={key}
-                      xl={{ span: 6 }}
-                      lg={{ span: 6 }}
-                      md={{ span: 12 }}
-                      sm={{ span: 12 }}
-                      xs={{ span: 24 }}
-                    >
-                      <Card
-                        style={{
-                          width: 300,
-                        }}
-                        onClick={() =>
-                          navigate(`/sellers/detail/${jobsData[key].id}`)
-                        }
-                      >
-                        <Text>Posted by user @{job.author.username} </Text>
-                        <Title level={3}>{job.title}</Title>
-                        <div
-                          dangerouslySetInnerHTML={{ __html: job?.description }}
+                {jobsData.length
+                  ? jobsData?.map((job, key) => {
+                      return (
+                        <Col
+                          key={key}
+                          xl={{ span: 6 }}
+                          lg={{ span: 6 }}
+                          md={{ span: 12 }}
+                          sm={{ span: 12 }}
+                          xs={{ span: 24 }}
                         >
-                          {}
-                        </div>
-                      </Card>
-                    </Col>
-                  );
-                })}
+                          <Card
+                            style={{
+                              width: 300,
+                            }}
+                            onClick={() =>
+                              navigate(`/sellers/detail/${jobsData[key].id}`)
+                            }
+                          >
+                            <Text>Posted by user @{job.author.username} </Text>
+                            <Title level={3}>{job.title}</Title>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: job?.description,
+                              }}
+                            >
+                              {}
+                            </div>
+                          </Card>
+                        </Col>
+                      );
+                    })
+                  : [...Array(8)].map((key) => (
+                      <Col
+                        key={key}
+                        xl={{ span: 6 }}
+                        lg={{ span: 6 }}
+                        md={{ span: 12 }}
+                        sm={{ span: 12 }}
+                        xs={{ span: 24 }}
+                      >
+                        <Skeleton
+                          avatar
+                          paragraph={{
+                            rows: 4,
+                          }}
+                        />
+                      </Col>
+                    ))}
+                {}
               </Row>
               {/* <Row
                 style={{

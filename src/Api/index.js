@@ -18,6 +18,7 @@ export const refreshToken = (data) => API.post("/auth/refresh-tokens", data);
 
 /*users*/
 
+export const getAllUsers = () => API.get(`/users`);
 export const getUser = (data) => API.get(`/users/${data}`);
 export const getUserByUsername = (username) =>
   API.get(`/users/profile/${username}`);
@@ -31,14 +32,23 @@ export const followUser = (id) => API.get(`/users/follow/${id}`);
 export const addPost = (data) => API.post(`/posts`, data);
 export const updatePost = (id, data) => API.patch(`/posts/${id}`, data);
 export const getPostById = (id) => API.get(`/posts/${id}`);
-export const getAllposts = (q) => API.get(`/posts?${q}`);
+export const getAllposts = (filters) =>
+  API.get(`/posts?filterBy=${filters ? filters : ""}`);
+export const getPostsByquery = (q) => API.get(`/posts?${q}`);
 export const searchPosts = (q, filters) =>
   API.get(`/posts/search?q=${q}&${filters}`);
 export const deletePost = () => API.get(`/posts`);
 export const viewPost = (id) => API.get(`/posts/view/${id}`);
 export const likePost = (id) => API.get(`/posts/like/${id}`);
 export const commentPost = (postId, data) =>
-  API.post(`/posts/${postId}/comments`, data);
+  API.post(`/posts/comments/${postId}`, data);
+
+export const createReply = (commentId, data) =>
+  API.post(`/posts/comment/reply/${commentId}`, data);
+
+export const getComments = (postId) => API.get(`/posts/comments/${postId}`);
+export const getCommentById = (commentId) =>
+  API.get(`/posts/comment/replies/${commentId}`);
 
 /*subscription*/
 

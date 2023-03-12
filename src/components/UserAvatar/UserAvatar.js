@@ -1,6 +1,11 @@
-import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
+import {
+  PlusOutlined,
+  LoadingOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { message, Upload, Row } from "antd";
 import { useState } from "react";
+
 import classes from "./UserAvatar.module.css";
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -20,28 +25,23 @@ const beforeUpload = (file) => {
 };
 const AvatarUpload = ({ getImage }) => {
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   const handleChange = (info) => {
+    getBase64(info.file.originFileObj, (url) => {
+      setLoading(false);
+      setImage(url);
+    });
     console.log(info.file.originFileObj);
 
     setImage(info.file.originFileObj);
     getImage(info.file.originFileObj);
-    // console.log(info)
-    // if (info.file.status === "uploading") {
-    //   console.log(info);
-    //   setLoading(true);
-    //   return;
-    // }
-    // if (info.file.status === "done") {
-    //   // Get this url from response in real world.
-    //   getBase64(info.file.originFileObj, (url) => {
-    //     setLoading(false);
-    //     setImageUrl(url);
-    //   });
-    // }
+  };
+
+  const deleteHandler = () => {
+    setImage(null);
   };
   const uploadButton = (
-    <div>
+    <div className={classes["upload__button"]}>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
       <div
         style={{
@@ -52,6 +52,7 @@ const AvatarUpload = ({ getImage }) => {
       </div>
     </div>
   );
+
   return (
     <>
       {/* <Upload
@@ -75,24 +76,35 @@ const AvatarUpload = ({ getImage }) => {
           uploadButton
         )}
       </Upload> */}
-      <Upload
-        name="avatar"
-        listType="picture-circle"
-        className={classes["avatar-uploader"]}
-        onChange={handleChange}
-      >
-        {image ? (
-          <img
-            src={image}
-            alt="avatar"
-            style={{
-              width: "100%",
-            }}
-          />
-        ) : (
-          uploadButton
-        )}
-      </Upload>
+      <Row align="middle" style={{ justifyContent: "center" }}>
+        <Upload
+          name="avatar"
+          listType="picture-circle"
+          // className="avatar-uploader"
+          beforeUpload={beforeUpload}
+          showUploadList={false}
+          className={classes["avatar-uploader"]}
+          onChange={handleChange}
+        >
+          {image ? (
+            <div className={classes["preview__wrapper"]}>
+              <img
+                src={image}
+                alt="avatar"
+                style={{
+                  width: "100%",
+                }}
+              />
+              <DeleteOutlined
+                className={classes["delete__preview"]}
+                onClick={deleteHandler}
+              />
+            </div>
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+      </Row>
     </>
   );
 };

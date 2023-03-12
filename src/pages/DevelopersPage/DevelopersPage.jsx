@@ -10,6 +10,7 @@ import {
   Input,
   Tooltip,
   message,
+  Skeleton,
 } from "antd";
 import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -21,28 +22,36 @@ import "./DevelopersPage.scss";
 import { getAllposts } from "../../Api";
 import { BASE_URL, BASE_URL_IMG, BASE_URL_IMG_Local } from "../../Api/BASE_URL";
 import { useNavigate } from "react-router-dom";
+
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 export default function DevelopersPage() {
   const navigate = useNavigate();
+  const [postsFilter, setPostsFilter] = useState("");
   const [projects, setProjects] = useState([]);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const call = async () => {
       try {
         let data;
         query.length > 0
-          ? (data = await getAllposts(`filterBy=${query}`))
-          : (data = await getAllposts(""));
+          ? (data = await getAllposts(
+              `${query}${
+                postsFilter ? `${query ? "," : ""}posts:${postsFilter}` : ""
+              }`
+            ))
+          : (data = await getAllposts(
+              `${postsFilter ? `posts:${postsFilter}` : ""}`
+            ));
 
-        console.log("post", data.data.results);
         let projects = [];
         data?.data?.results.map((ele, index) => {
           projects.push({
             projectName: ele.title,
             author: ele.author,
-            cover: `${ele.media[0]?.pathUrl}`,
+            cover: `${ele.media[0]?.pathUrl ? ele.media[0]?.pathUrl : ""}`,
             logo: "",
             likes: ele.likesCount,
             views: ele.viewsCount,
@@ -53,13 +62,14 @@ export default function DevelopersPage() {
           console.log(projects[index].cover);
         });
         setProjects(projects);
+        setLoading(false);
       } catch (e) {
         console.log(e);
         message.error(e?.response?.data?.message);
       }
     };
     call();
-  }, [query]);
+  }, [query, postsFilter]);
 
   const userProfile = profile();
 
@@ -68,27 +78,33 @@ export default function DevelopersPage() {
 
   const enterLoading = () => {
     setProjectLoaded(true);
-    // setTimeout(() => {
-    // 	setProjectLoaded(false);
-    // 	setProjects(userProfile?.projects);
-    // }, 3000);
   };
   const mediaMatch = window.matchMedia("(max-width: 400px)");
-  console.log(mediaMatch);
+
   const codingLanguages = [
-    { value: "Web", label: "Web" },
-    { value: "Mobile", label: "Mobile" },
-    { value: "Python", label: "Python" },
-    { value: "Node", label: "Node" },
+    { value: "Javascript", label: "Javascript" },
+    { value: "GO", label: "GO" },
+    { value: "Java", label: "Java" },
+    { value: "Kotlin", label: "Kotlin" },
+    { value: "PHP", label: "PHP" },
+    { value: "C#", label: "C#" },
+    { value: "Swift", label: "Swift" },
+    { value: "R", label: "R" },
+    { value: "Ruby", label: "Ruby" },
+    { value: "Typescript", label: "Typescript" },
+    { value: "Html", label: "Html" },
+    { value: "CSS", label: "CSS" },
+    { value: "Rust", label: "Rust" },
     { value: "React", label: "React" },
+    { value: "Node js", label: "Node js" },
   ];
-  const tagLibrary = [];
-  for (let i = 10; i < 36; i++) {
-    tagLibrary.push({
-      value: i.toString(36) + i,
-      label: i.toString(36) + i,
-    });
-  }
+  // const tagLibrary = [];
+  // for (let i = 10; i < 36; i++) {
+  //   tagLibrary.push({
+  //     value: i.toString(36) + i,
+  //     label: i.toString(36) + i,
+  //   });
+  // }
 
   const toggleFilters = () => {
     setFiltersShown((current) => !current);
@@ -118,6 +134,10 @@ export default function DevelopersPage() {
 
     setQuery(filter_url);
   }, [tagsFilter, toolsFilter]);
+
+  const filterChangeHandler = (e) => {
+    setPostsFilter(e);
+  };
 
   return (
     <section
@@ -208,7 +228,7 @@ export default function DevelopersPage() {
                   style={{
                     width: 120,
                   }}
-                  // onChange={handleChange}
+                  onChange={filterChangeHandler}
                   options={[
                     {
                       value: "New",
@@ -258,7 +278,7 @@ export default function DevelopersPage() {
                       style={{
                         minWidth: 220,
                       }}
-                      options={tagLibrary}
+                      // options={tagLibrary}
                     />
                   </Col>
                   <Col>
@@ -285,20 +305,40 @@ export default function DevelopersPage() {
               }}
               gutter={[30, 40]}
             >
-              {projects.map((project, key) => {
-                return (
-                  <Col
-                    key={key}
-                    xl={{ span: 6 }}
-                    lg={{ span: 6 }}
-                    md={{ span: 12 }}
-                    sm={{ span: 12 }}
-                    xs={{ span: 24 }}
-                  >
-                    <ProjectItem project={project} />
-                  </Col>
-                );
-              })}
+              {loading
+                ? [...Array(8)].map((key) => (
+                    <Col
+                      key={key}
+                      xl={{ span: 6 }}
+                      lg={{ span: 6 }}
+                      md={{ span: 12 }}
+                      sm={{ span: 12 }}
+                      xs={{ span: 24 }}
+                    >
+                      <Skeleton
+                        avatar
+                        paragraph={{
+                          rows: 4,
+                        }}
+                      />
+                    </Col>
+                  ))
+                : projects.length
+                ? projects.map((project, key) => {
+                    return (
+                      <Col
+                        key={key}
+                        xl={{ span: 6 }}
+                        lg={{ span: 6 }}
+                        md={{ span: 12 }}
+                        sm={{ span: 12 }}
+                        xs={{ span: 24 }}
+                      >
+                        <ProjectItem project={project} />
+                      </Col>
+                    );
+                  })
+                : "No results found"}
             </Row>
           </Space>
         </Col>

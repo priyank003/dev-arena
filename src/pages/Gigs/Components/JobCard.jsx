@@ -8,7 +8,7 @@ import {
 } from "antd";
 import { BiLocationPlus } from "react-icons/bi";
 
-import user from "./../../../assets/Profile Images/profile_pic.png";
+import user from "./../../../assets/ProfileImages/profile_pic.png";
 import css from "./JobCard.module.scss";
 
 const { Panel } = Collapse;

@@ -13,9 +13,10 @@ import {
   Avatar,
   Divider,
   Button,
+  Skeleton,
 } from "antd";
 import { BsChat } from "react-icons/bs";
-import { FiUserPlus } from "react-icons/fi";
+import { FiUserPlus, FiUserMinus } from "react-icons/fi";
 import { LeftOutlined } from "@ant-design/icons";
 import { SlCalender } from "react-icons/sl";
 import { EllipsisOutlined } from "@ant-design/icons";
@@ -24,37 +25,90 @@ import { articles, tags, comments } from "../../utils/data";
 import css from "./SkillsPage.module.scss";
 import replyArrow from "../../assets/svg/replyArrow.svg";
 import twitter from "../../assets/social_icons/twitter.svg";
-import { HeartOutlined, EyeOutlined, SendOutlined } from "@ant-design/icons";
+import {
+  HeartOutlined,
+  EyeOutlined,
+  SendOutlined,
+  HeartFilled,
+} from "@ant-design/icons";
 import { Co } from "react-flags-select";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { addPost } from "../../Api";
+import { addPost, followUser, getUserByUsername, getComments } from "../../Api";
 import { useEffect, useState, useMemo, Fragment } from "react";
 import { getPostById, likePost, viewPost, commentPost } from "../../Api/index";
 import "react-quill/dist/quill.snow.css";
 
 import Moment from "react-moment";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "../../redux/Slices/userSlice";
+import defaultAvatar from "../../assets/ProfileImages/deafult_avatar.png";
+import { TwitterIcon, TwitterShareButton } from "react-share";
+
+import Comments from "./Comments";
 const { Text, Title } = Typography;
 
 function SkillsPage() {
+  const user = useSelector((state) => state.user);
+  const [currentUser, setCurrentUser] = useState(user);
+  const dispatch = useDispatch();
+
   const [searchParams, setSearchParams] = useSearchParams();
+  const [refresh, setRefresh] = useState(false);
 
   const [postData, setPostData] = useState(false);
+  const [postComments, setPostComments] = useState([]);
+  const [userLikedPost, setUserLikedPost] = useState(false);
   const [comment, setComment] = useState("");
-  useMemo(() => {
+  const [following, setFollowing] = useState(false);
+
+  useEffect(() => {
+    const call = async () => {
+      currentUser.likedPosts.includes(postData?.posterId)
+        ? setUserLikedPost(true)
+        : setUserLikedPost(false);
+
+      currentUser.following.some((e) => e.id === postData?.author?.id)
+        ? setFollowing(true)
+        : setFollowing(false);
+    };
+
+    call();
+  }, [postData]);
+
+  useEffect(() => {
+    // const postLikeStatus = (postId) => {
+    //   if (currentUser.likedPosts.includes(postId)) {
+    //     console.log("liked");
+    //   }
+    //   return currentUser.likedPosts.includes(postId)
+    //     ? setUserLikedPost(true)
+    //     : setUserLikedPost(false);
+    // };
+
     const call = async () => {
       try {
         const res = await getPostById(searchParams.get("post"));
 
+        const postCommentsRes = await getComments(res.data.posterId);
+
+        const fetchUserRes = await getUserByUsername(currentUser.username);
+        setCurrentUser(fetchUserRes.data);
+        dispatch(getUserData(fetchUserRes.data));
+
         setPostData(res.data);
-        if (res.statusText === "OK") {
-          await viewPost(searchParams.get("post"));
-        }
+        console.log("comments", postCommentsRes);
+        setPostComments(postCommentsRes.data);
+        // dispatch();
+
+        // if (res.statusText === "OK") {
+        //   await viewPost(searchParams.get("post"));
+        // }
       } catch (e) {
         console.log(e);
       }
     };
     call();
-  }, []);
+  }, [refresh]);
 
   const blogs = articles();
   const tag = tags();
@@ -78,7 +132,27 @@ function SkillsPage() {
   //   </button>
   // );
   const likeHandler = async () => {
-    await likePost(postData.posterId);
+    try {
+      const res = await likePost(postData.posterId);
+
+      if (res.data === "OK") {
+        setUserLikedPost(true);
+        setRefresh((prev) => !prev);
+      } else if (res.data === "unliked") {
+        setUserLikedPost(false);
+        setRefresh((prev) => !prev);
+      }
+
+      // if (res.data === "unliked") {
+      //   setUserLikedPost(false);
+      //   setRefresh((prev) => !prev);
+      // } else if (res.data === "OK") {
+      //   setUserLikedPost(true);
+      //   setRefresh((prev) => !prev);
+      // }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
@@ -143,11 +217,29 @@ function SkillsPage() {
     ],
   };
 
-  const commentSubmitHandler = () => {
-    const commentRes = commentPost(postData.posterId, { description: comment });
+  const commentSubmitHandler = async () => {
+    const commentRes = await commentPost(postData.posterId, {
+      description: comment,
+    });
 
-    console.log(commentRes);
+    if (commentRes.status === 201) {
+      setRefresh((prev) => !prev);
+    }
   };
+
+  const followUserHandler = async () => {
+    const res = await followUser(postData.author.id);
+
+    if (res.data.msg === "follow") {
+      setFollowing(true);
+      setRefresh((prev) => !prev);
+    } else if (res.data.msg === "unfollow") {
+      setFollowing(false);
+      setRefresh((prev) => !prev);
+    }
+  };
+
+  console.log("liked status", userLikedPost);
 
   return (
     <Fragment>
@@ -218,9 +310,15 @@ function SkillsPage() {
                   <Avatar
                     src={
                       <Image
-                        src={userComments?.profile_pic}
+                        src={
+                          postData?.author?.avatar?.pathUrl
+                            ? postData.author.avatar.pathUrl
+                            : defaultAvatar
+                        }
                         style={{
                           width: 32,
+                          height: 32,
+                          objectFit: "cover",
                         }}
                       />
                     }
@@ -230,8 +328,27 @@ function SkillsPage() {
                     <Link to={`/profile/${postData?.author?.username}`}>
                       <Text type="secondary">{postData?.author?.name}</Text>
                     </Link>
-                    <BsChat size="18px" />
-                    <FiUserPlus size="18px" />
+                    {currentUser.id !== postData.author.id && (
+                      <>
+                        {" "}
+                        <Link to={`/chat/${postData.author.id}`}>
+                          <BsChat size="18px" />
+                        </Link>
+                        {following ? (
+                          <FiUserMinus
+                            size="18px"
+                            style={{ cursor: "pointer" }}
+                            onClick={followUserHandler}
+                          />
+                        ) : (
+                          <FiUserPlus
+                            size="18px"
+                            style={{ cursor: "pointer" }}
+                            onClick={followUserHandler}
+                          />
+                        )}
+                      </>
+                    )}
                   </Space>
                 </Col>
 
@@ -245,7 +362,13 @@ function SkillsPage() {
                 >
                   <Button
                     className={css["like_btn"]}
-                    icon={<HeartOutlined />}
+                    icon={
+                      userLikedPost ? (
+                        <HeartFilled style={{ color: "red" }} />
+                      ) : (
+                        <HeartOutlined />
+                      )
+                    }
                     onClick={likeHandler}
                   >
                     {postData?.likesCount}
@@ -370,28 +493,22 @@ function SkillsPage() {
 
                     <Space size="middle">
                       <Col className="icon_box">
-                        <Image
+                        {/* <Image
                           width="18px"
                           src={twitter}
                           alt="Social Icon"
                           preview={false}
-                        />
-                      </Col>
-                      <Col className="icon_box">
-                        <Image
-                          width="18px"
-                          src={twitter}
-                          alt="Social Icon"
-                          preview={false}
-                        />
-                      </Col>
-                      <Col className="icon_box">
-                        <Image
-                          width="18px"
-                          src={twitter}
-                          alt="Social Icon"
-                          preview={false}
-                        />
+                        /> */}
+                        <TwitterShareButton
+                          url={window.location.href}
+                          // quote={"hi"}
+                          // hashtag="#camperstribe"
+                          className="socialMediaButton"
+                          style={{ border: "none" }}
+                        >
+                          {console.log(postData)}
+                          <TwitterIcon size={36} style={{ border: "none" }} />
+                        </TwitterShareButton>
                       </Col>
                     </Space>
                   </Col>
@@ -445,54 +562,12 @@ function SkillsPage() {
                 <br />
                 <br />
                 <div>
-                  {postData.comments.map((comment) => {
+                  {postComments.comments.map((comment) => {
                     return (
-                      <Row style={{ overflow: "hidden", width: "100%" }}>
-                        <Col xs={{ span: 3 }} lg={{ span: 1 }}>
-                          <Avatar
-                            src={
-                              <Image
-                                src={userComments?.profile_pic}
-                                style={{
-                                  width: 32,
-                                }}
-                              />
-                            }
-                          />
-                        </Col>
-
-                        <Col lg={{ span: 20 }} xs={{ span: 21 }}>
-                          <Col span={24}>
-                            <Text strong>{comment.author?.name}</Text> &nbsp;
-                            <Text type="secondary">
-                              {comment.author?.userName} &nbsp;{" "}
-                              <Moment format="DD/MM//YYYY">
-                                {comment.postedAt}
-                              </Moment>
-                            </Text>
-                          </Col>
-
-                          <Col span={24}>
-                            <Text>{comment?.description}</Text>
-                          </Col>
-
-                          <Col span={23} style={{ textAlign: "end" }}>
-                            <Space>
-                              <Image src={replyArrow} alt="Reply" />
-                              <Text
-                                className="reply"
-                                style={{ color: "#09A7D9" }}
-                              >
-                                Reply
-                              </Text>
-                            </Space>
-                          </Col>
-
-                          <Col span={22}>
-                            <Divider />
-                          </Col>
-                        </Col>
-                      </Row>
+                      <Comments
+                        comment={comment}
+                        onRefresh={() => setRefresh((prev) => !prev)}
+                      />
                     );
                   })}
                 </div>
@@ -501,7 +576,14 @@ function SkillsPage() {
           </Row>
         </Col>
       ) : (
-        ""
+        <>
+          {" "}
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </>
       )}
     </Fragment>
   );

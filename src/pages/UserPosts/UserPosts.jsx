@@ -15,7 +15,7 @@ import { BiLocationPlus } from "react-icons/bi";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import JobCard from "./Components/JobCard";
-import user from "../../assets/Profile Images/profile_pic.png";
+import user from "../../assets/ProfileImages/profile_pic.png";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getJobs } from "../../Api";

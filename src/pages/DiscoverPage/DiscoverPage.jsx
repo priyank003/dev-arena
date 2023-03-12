@@ -12,9 +12,15 @@ import {
   Input,
   message,
 } from "antd";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { searchPosts, searchUsers } from "../../Api";
+import {
+  getAllposts,
+  getAllUsers,
+  getPostsByquery,
+  searchPosts,
+  searchUsers,
+} from "../../Api";
 import { BASE_URL_IMG } from "../../Api/BASE_URL";
 import { profile } from "../../utils/data";
 
@@ -41,14 +47,21 @@ export default function DiscoverPage() {
     const call = async () => {
       try {
         let postData;
-        query.length > 0
-          ? (postData = await searchPosts(
-              searchParams.get("q"),
-              `filterBy=${query}`
-            ))
-          : (postData = await searchPosts(searchParams.get("q"), ""));
+        let usersData;
+        // console.log(searchParams.get("q"));
+        if (searchParams.get("q") === "" || searchParams.get("q") === null) {
+          postData = await getAllposts(query);
+          usersData = await getAllUsers();
+        } else {
+          query.length > 0
+            ? (postData = await searchPosts(
+                searchParams.get("q"),
+                `filterBy=${query}`
+              ))
+            : (postData = await searchPosts(searchParams.get("q"), ""));
+          usersData = await searchUsers(searchParams.get("q"));
+        }
 
-        const usersData = await searchUsers(searchParams.get("q"));
         setUsersCount(usersData.data.results.length);
 
         setPostsCount(postData.data.results.length);
@@ -84,19 +97,29 @@ export default function DiscoverPage() {
   console.log("projects", projects);
 
   const codingLanguages = [
-    { value: "Web", label: "Web" },
-    { value: "Mobile", label: "Mobile" },
-    { value: "Python", label: "Python" },
-    { value: "Node", label: "Node" },
+    { value: "Javascript", label: "Javascript" },
+    { value: "GO", label: "GO" },
+    { value: "Java", label: "Java" },
+    { value: "Kotlin", label: "Kotlin" },
+    { value: "PHP", label: "PHP" },
+    { value: "C#", label: "C#" },
+    { value: "Swift", label: "Swift" },
+    { value: "R", label: "R" },
+    { value: "Ruby", label: "Ruby" },
+    { value: "Typescript", label: "Typescript" },
+    { value: "Html", label: "Html" },
+    { value: "CSS", label: "CSS" },
+    { value: "Rust", label: "Rust" },
     { value: "React", label: "React" },
+    { value: "Node js", label: "Node js" },
   ];
-  const tagLibrary = [];
-  for (let i = 10; i < 36; i++) {
-    tagLibrary.push({
-      value: i.toString(36) + i,
-      label: i.toString(36) + i,
-    });
-  }
+  // const tagLibrary = [];
+  // for (let i = 10; i < 36; i++) {
+  //   tagLibrary.push({
+  //     value: i.toString(36) + i,
+  //     label: i.toString(36) + i,
+  //   });
+  // }
 
   const [projectsLoaded, setProjectLoaded] = useState(false);
   const toggleFilters = () => {
@@ -188,10 +211,14 @@ export default function DiscoverPage() {
           <Space direction="vertical" size="middle" style={{ width: "100%" }}>
             <Col span={24} xs={24}>
               <Title level={4} xs={24}>
-                {showData === "posts"
-                  ? `found ${postsCount} posts for "${searchParams.get("q")}`
-                  : `found ${usersCount} users for "${searchParams.get("q")}`}
+                {/* {searchParams.get("q")!==null &&  } */}
+                {searchParams.get("q") !== null && searchParams.get("q") !== ""
+                  ? showData === "posts"
+                    ? `found ${postsCount} posts for "${searchParams.get("q")}`
+                    : `found ${usersCount} users for "${searchParams.get("q")}`
+                  : ""}
               </Title>
+
               <Row
                 align="middle"
                 justify="center"
@@ -259,7 +286,6 @@ export default function DiscoverPage() {
                       style={{
                         minWidth: 220,
                       }}
-                      options={tagLibrary}
                     />
                   </Col>
                   <Col>
@@ -321,7 +347,9 @@ export default function DiscoverPage() {
                       sm={{ span: 12 }}
                       xs={{ span: 24 }}
                     >
-                      <UserItem user={user} />
+                      <Link to={`/profile/${user.username}`}>
+                        <UserItem user={user} />
+                      </Link>
                     </Col>
                   );
                 })}

@@ -25,43 +25,6 @@ import { getUserData } from "../../redux/Slices/userSlice";
 
 const { Text } = Typography;
 
-const items = [
-  {
-    key: "1",
-    label: <Link to="/profile">Profile</Link>,
-  },
-  {
-    key: "2",
-    label: <Link to="/editskills">Upload</Link>,
-  },
-  {
-    key: "3",
-    label: <Link to="/editprofile">Edit Profile</Link>,
-  },
-  {
-    key: "4",
-    danger: true,
-    label: <Link to="/deleteaccount">Delete Account</Link>,
-  },
-  {
-    key: "5",
-    danger: true,
-    label: (
-      <Link
-        // to="/auth/login"
-        onClick={() => {
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          localStorage.removeItem("persist:root");
-          const dispatch = useDispatch();
-          dispatch(getUserData(""));
-        }}
-      >
-        Sign Out
-      </Link>
-    ),
-  },
-];
 const items2 = [
   {
     key: "job_1",
@@ -121,6 +84,46 @@ export default function AppBar() {
   useEffect(() => {}, []);
   const navigate = useNavigate();
   const data = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const signOutHandler = () => {};
+
+  const items = [
+    {
+      key: "1",
+      label: <Link to={`/profile/${data.username}`}>Profile</Link>,
+    },
+    {
+      key: "2",
+      label: <Link to="/editskills">Upload</Link>,
+    },
+    {
+      key: "3",
+      label: <Link to="/editprofile">Edit Profile</Link>,
+    },
+    {
+      key: "4",
+      danger: true,
+      label: <Link to="/deleteaccount">Delete Account</Link>,
+    },
+    {
+      key: "5",
+      danger: true,
+      label: (
+        <Link
+          // to="/auth/login"
+          onClick={() => {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("persist:root");
+            dispatch(getUserData(""));
+          }}
+        >
+          Sign Out
+        </Link>
+      ),
+    },
+  ];
 
   const [searchQuery, setSearchQuery] = useState("");
 

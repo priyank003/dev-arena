@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import css from "./MessagesItem.module.scss";
 import chatImage from "./msgImg.png";
 import { ReactComponent as MenuIcon } from "./menuicon.svg";
+import defaultAvatar from "../../../../assets/ProfileImages/deafult_avatar.png";
 const { Title, Text } = Typography;
 
 export default function MessagesItem({ MsgsArray, currentUser, receiver }) {
@@ -39,15 +40,23 @@ export default function MessagesItem({ MsgsArray, currentUser, receiver }) {
                 key={index}
                 date={msg.postedAt}
                 name={msg.sender.name}
-                avatar={msg.sender.avatar.pathUrl}
+                avatar={
+                  msg?.sender?.avatar?.pathUrl
+                    ? msg.sender.avatar.pathUrl
+                    : defaultAvatar
+                }
                 msg={msg}
               />
             ) : (
               <ReplyMessage
                 key={index}
                 date={msg.postedAt}
-                name={msg.receiver.name}
-                avatar={msg.receiver.avatar.pathUrl}
+                name={msg.sender.name}
+                avatar={
+                  msg?.sender?.avatar?.pathUrl
+                    ? msg.sender.avatar.pathUrl
+                    : defaultAvatar
+                }
                 msg={msg}
               />
             )}
@@ -114,7 +123,7 @@ function SentMessage({ date, name, avatar, msg }) {
         </Row>
 
         <Space>
-          <Col>
+          {/* <Col>
             <Dropdown menu={{ items }} trigger={["click"]}>
               <a
                 onClick={(e) => e.preventDefault()}
@@ -123,7 +132,7 @@ function SentMessage({ date, name, avatar, msg }) {
                 <MenuIcon />
               </a>
             </Dropdown>
-          </Col>
+          </Col> */}
           {msg.imageincluded ? (
             <Col>
               <Image
@@ -151,7 +160,7 @@ function SentMessage({ date, name, avatar, msg }) {
           xl: 36,
           xxl: 36,
         }}
-        src={avatar}
+        src={avatar ? avatar : defaultAvatar}
       />
     </Space>
   );
@@ -190,7 +199,7 @@ function ReplyMessage({ date, name, avatar, msg }) {
           xl: 36,
           xxl: 36,
         }}
-        src={avatar}
+        src={avatar ? avatar : defaultAvatar}
       />
 
       <Space
@@ -240,7 +249,7 @@ function ReplyMessage({ date, name, avatar, msg }) {
               <Text>{msg.text}</Text>
             </Col>
           )}
-          <Col>
+          {/* <Col>
             <Dropdown menu={{ items }} trigger={["click"]}>
               <a
                 onClick={(e) => e.preventDefault()}
@@ -249,7 +258,7 @@ function ReplyMessage({ date, name, avatar, msg }) {
                 <MenuIcon />
               </a>
             </Dropdown>
-          </Col>
+          </Col> */}
         </Space>
       </Space>
     </Space>

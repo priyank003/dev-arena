@@ -7,9 +7,12 @@ import { ReactComponent as AudioIcon } from "./audio.svg";
 import { ReactComponent as FileIcon } from "./file.svg";
 import { ReactComponent as VideoIcon } from "./video.svg";
 import usercss from "./UserItem.module.scss";
+import { useNavigate } from "react-router-dom";
+import defaultAvatar from "../../../../assets/ProfileImages/deafult_avatar.png";
 
 const { Title, Text } = Typography;
 export default function UserItem({ user, onOpenConversation, last_msg }) {
+  const navigate = useNavigate();
   const [isTablet, setTsTablet] = useState(
     useMediaQuery({
       query: "(max-width: 768px)",
@@ -37,7 +40,8 @@ export default function UserItem({ user, onOpenConversation, last_msg }) {
       style={{ background: user.isActive ? "#18191f" : null }}
       key={user.id}
       onClick={() => {
-        onOpenConversation(user);
+        navigate(`/chat/${user.id}`);
+        // onOpenConversation(user);
       }}
     >
       <List.Item.Meta
@@ -87,7 +91,9 @@ export default function UserItem({ user, onOpenConversation, last_msg }) {
                   xl: 46,
                   xxl: 46,
                 }}
-                src={user.avatar?.pathUrl}
+                src={
+                  user.avatar?.pathUrl ? user.avatar?.pathUrl : defaultAvatar
+                }
                 alt={user.name}
               />
             </Badge>

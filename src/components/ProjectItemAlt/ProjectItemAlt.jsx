@@ -2,6 +2,7 @@ import { Avatar, Card, Col, Row, Space, Typography } from "antd";
 import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 
 import avatar from "./Avatar.png";
+import defaultAvatar from "../../assets/ProfileImages/deafult_avatar.png";
 import css from "./ProjectItemAlt.module.scss";
 
 const { Meta } = Card;
@@ -15,14 +16,21 @@ export default function ProjectItem({ project }) {
         <img
           style={{ objectFit: "cover", height: "220px", borderRadius: "10px" }}
           alt="Project Cover"
-          src={project?.media[0].pathUrl}
+          src={project?.media[0]?.pathUrl}
         />
       }
     >
       <Meta
         avatar={
-          <Avatar className={css["card__avatar"]}>
-            {project?.author.username[0]}
+          <Avatar
+            className={css["card__avatar"]}
+            src={
+              project?.author.avatar?.pathUrl
+                ? project?.author.avatar?.pathUrl
+                : defaultAvatar
+            }
+          >
+            {/* {project?.author.username[0]} */}
           </Avatar>
         }
         title={

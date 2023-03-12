@@ -9,7 +9,7 @@ import {
   Space,
   Typography,
 } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
@@ -32,11 +32,16 @@ import {
   getUsers,
   getConversation,
 } from "../../Api";
+import { useParams } from "react-router-dom";
+import defaultAvatar from "../../assets/ProfileImages/deafult_avatar.png";
 
 const { Text, Title } = Typography;
 const { Header, Sider, Content, Footer } = Layout;
 
 const ChatPage = () => {
+  const { receiverId } = useParams();
+  console.log("reciver id", receiverId);
+
   const currentUser = useSelector((store) => store.user);
   const [collapsed, setCollapsed] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,10 +54,15 @@ const ChatPage = () => {
 
   useEffect(() => {
     const call = async () => {
-      const convo = await getConversations();
       const users = await getUsers();
+      if (receiverId !== undefined) {
+        const loadUserChat = users.data.filter(
+          (user) => user.id === receiverId
+        )[0];
 
-      console.log("all cobnvo", convo.data);
+        setReceiver(loadUserChat);
+      }
+      const convo = await getConversations();
 
       setConversations(convo.data);
 
@@ -60,7 +70,7 @@ const ChatPage = () => {
     };
 
     call();
-  }, []);
+  }, [receiverId]);
   useEffect(() => {
     // const call = async () => {
     //   const response5 = getMessagesInConversation("63b423638feed135b8deb998");
@@ -98,8 +108,8 @@ const ChatPage = () => {
 
   const handleClick = async () => {
     await newMessage({
-      conversationId: currentConv.id,
-      receiver: receiver.id,
+      conversationId: currentConv?.id,
+      receiver: receiver?.id,
       messageType: "text",
       text: message,
     });
@@ -117,30 +127,44 @@ const ChatPage = () => {
     query: "(max-width: 1190px)",
   });
 
-  useEffect(() => {}, [isTablet]);
+  // useEffect(() => {
+  //   if (receiverId) {
+  //     const loadUserChat = allUsers.filter((user) => user.id === receiverId)[0];
+
+  //     setReceiver(loadUserChat);
+  //   }
+  // }, [receiverI]);
 
   useEffect(() => {
     const call = async () => {
-      const convo = await getConversation(receiver.id);
-      if (convo.data === "") {
-        const newConvo = await newConversation({ receiverId: receiver.id });
+      console.log("recever", receiver);
+      try {
+        const convo = await getConversation(receiver.id);
+        console.log("convo", convo);
+        if (convo.data === "") {
+          const newConvo = await newConversation({ receiverId: receiver.id });
 
-        setCurrentConv(newConvo.data);
-      } else {
-        const messages = await getMessagesInConversation(convo.data.id);
-        setConvMessages(messages.data.results);
-        setCurrentConv(convo.data);
+          setCurrentConv(newConvo.data);
+        } else {
+          const messages = await getMessagesInConversation(convo.data.id);
+          setConvMessages(messages.data.results);
+          setCurrentConv(convo.data);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
 
     call();
   }, [receiver, refresh]);
 
+  // console.log("receiver", receiver);
+
   return (
     <section className="ChatPage">
       <Layout style={{ height: "calc(100vh - 48px)" }}>
         <Sider
-          style={{ height: "calc(100vh - 48px)", overflow: "hidden" }}
+          style={{ height: "calc(100vh - 48px)", overflow: "auto" }}
           trigger={null}
           className={"chat__sidebar " + (collapsed ? "collapsedClass" : "")}
           collapsible
@@ -169,19 +193,21 @@ const ChatPage = () => {
               Messages
             </Title>
 
-            <Input
+            {/* <Input
               className="search-msg"
               prefix={<SearchOutlined />}
               placeholder=" Search..."
               size="large"
-            />
+              // style={{ color: "white" }}
+            /> */}
 
             <List
               dataSource={allUsers}
               renderItem={(user) => (
                 <UserItem
                   user={user}
-                  onOpenConversation={(user) => setReceiver(user)}
+                  key={user.id}
+                  // onOpenConversation={(user) => setReceiver(user)}
                 />
               )}
             />
@@ -207,7 +233,7 @@ const ChatPage = () => {
               }}
             >
               <List>
-                {conversations?.map((convo) => {
+                {conversations?.map((convo, index) => {
                   // console.log(convo.messages.slice(-1));
 
                   return (
@@ -222,6 +248,7 @@ const ChatPage = () => {
                           }
                           last_msg={convo?.messages?.slice(-1)[0]?.text}
                           onOpenConversation={(user) => setReceiver(user)}
+                          key={index}
                         />
                       )}{" "}
                     </>
@@ -255,7 +282,11 @@ const ChatPage = () => {
                       xxl: 40,
                     }}
                     icon={<UserOutlined />}
-                    src={receiver?.avatar?.pathUrl}
+                    src={
+                      receiver?.avatar?.pathUrl
+                        ? receiver?.avatar?.pathUrl
+                        : defaultAvatar
+                    }
                   />
 
                   <Title
@@ -318,7 +349,10 @@ const ChatPage = () => {
                     xl={{ span: 14 }}
                     style={{ padding: "10px", width: "100%" }}
                   >
-                    <WriteMessage onChange={handleChange} onSend={handleClick} />
+                    <WriteMessage
+                      onChange={handleChange}
+                      onSend={handleClick}
+                    />
                     {/* <Button onClick={handleClick}>Send</Button> */}
                   </Col>
                 </Col>

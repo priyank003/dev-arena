@@ -91,11 +91,21 @@ export default function AddSkills() {
   }
 
   const codingLanguages = [
-    { value: "Web" },
-    { value: "Mobile" },
-    { value: "Python" },
-    { value: "Node" },
-    { value: "React" },
+    { value: "Javascript", label: "Javascript" },
+    { value: "GO", label: "GO" },
+    { value: "Java", label: "Java" },
+    { value: "Kotlin", label: "Kotlin" },
+    { value: "PHP", label: "PHP" },
+    { value: "C#", label: "C#" },
+    { value: "Swift", label: "Swift" },
+    { value: "R", label: "R" },
+    { value: "Ruby", label: "Ruby" },
+    { value: "Typescript", label: "Typescript" },
+    { value: "Html", label: "Html" },
+    { value: "CSS", label: "CSS" },
+    { value: "Rust", label: "Rust" },
+    { value: "React", label: "React" },
+    { value: "Node js", label: "Node js" },
   ];
 
   const uploadLogo = (data) => {
@@ -337,7 +347,7 @@ export default function AddSkills() {
                     style={{
                       width: "100%",
                     }}
-                    options={options}
+                    // options={options}
                   />
                 </Form.Item>
               </Col>

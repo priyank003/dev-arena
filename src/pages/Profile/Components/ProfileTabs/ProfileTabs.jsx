@@ -25,14 +25,16 @@ export default function JobPost({ userId, allLikedPosts }) {
 
   useEffect(() => {
     const call = async () => {
-      const postsRes = await getAllposts(`filterBy=author:${userId}`);
+      // console.log("userId", userId);
+      const postsRes = await getAllposts(`author:${userId}`);
+      console.log("posts by author ", postsRes);
       setProjects(postsRes.data.results);
 
       const jobsRes = await getJobs(`filterBy=author:${userId}`);
       setJobs(jobsRes.data.results);
 
       const likedPostsRes = await getAllposts(
-        `filterBy=posterId:${allLikedPosts.join("||")}`
+        `posterId:${allLikedPosts.join("||")}`
       );
       console.log("fetched liked posts", likedPostsRes);
       setLikedPosts(likedPostsRes.data.results);

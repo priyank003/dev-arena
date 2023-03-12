@@ -4,24 +4,26 @@ import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import avatar from "./Avatar.png";
 import css from "./ProjectItem.module.scss";
 import { useNavigate } from "react-router-dom";
+import defaultAvatar from "../../assets/ProfileImages/deafult_avatar.png";
+import defaultPostCover from "../../assets/ProjectImages/project3.jpg";
 
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 export default function ProjectItem({ project }) {
-  console.log("project author", project.author);
   const navigate = useNavigate();
+  console.log(project);
   return (
     <Card
       onClick={() => {
-        navigate({ pathname: "/skills", search: `?post=${project.postId}` });
+        navigate({ pathname: "/skills", search: `?post=${project?.postId}` });
       }}
       className={css["card"]}
       cover={
         <img
           style={{ objectFit: "cover", height: "220px", borderRadius: "10px" }}
           alt="Project Cover"
-          src={project?.cover}
+          src={project?.cover ? project?.cover : defaultPostCover}
         />
       }
     >
@@ -30,7 +32,11 @@ export default function ProjectItem({ project }) {
         avatar={
           <Avatar
             className={css["card__avatar"]}
-            src={project.author.avatar ? project.author.avatar.pathUrl : avatar}
+            src={
+              project?.author?.avatar
+                ? project.author.avatar.pathUrl
+                : defaultAvatar
+            }
           />
         }
         title={

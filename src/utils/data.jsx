@@ -1,18 +1,24 @@
 import blogImage from "../assets/Banners/banner1.png";
 import coverPhoto from "../assets/Banners/banner2.png";
-import userPhoto from "../assets/Profile Images/profile_pic.png";
-import profilePhoto from "../assets/Profile Images/profile_pic2.jpeg";
+import userPhoto from "../assets/ProfileImages/profile_pic.png";
+import profilePhoto from "../assets/ProfileImages/profile_pic2.jpeg";
 
 import twitch from "../assets/social_icons/twitch.svg";
 import discord from "../assets/social_icons/discord.svg";
 import telegram from "../assets/social_icons/telegram.svg";
 import twitter from "../assets/social_icons/twitter.svg";
+import gitlab from "../assets/social_icons/icons8-gitlab.svg";
+import github from "../assets/social_icons/icons8-github.svg";
+import linkedin from "../assets/social_icons/icons8-linkedin-circled.svg";
+import behance from "../assets/social_icons/icons8-behance.svg";
+import codepen from "../assets/social_icons/icons8-codepen.svg";
+import custom from "../assets/social_icons/icons8-custom-64.png";
 
-import ProjectImg1 from "../assets/Project Images/project1.jpg";
-import ProjectImg2 from "../assets/Project Images/project2.jpg";
-import ProjectImg3 from "../assets/Project Images/project3.jpg";
-import ProjectImg4 from "../assets/Project Images/project4.jpg";
-import ProjectImg5 from "../assets/Project Images/project5.jpg";
+import ProjectImg1 from "../assets/ProjectImages/project1.jpg";
+import ProjectImg2 from "../assets/ProjectImages/project2.jpg";
+import ProjectImg3 from "../assets/ProjectImages/project3.jpg";
+import ProjectImg4 from "../assets/ProjectImages/project4.jpg";
+import ProjectImg5 from "../assets/ProjectImages/project5.jpg";
 
 export const comments = () => {
   const comment = {
@@ -39,6 +45,17 @@ export const tags = () => {
   return tags;
 };
 
+export const socialIcons = {
+  twitter: twitter,
+  gitlab: gitlab,
+  github: github,
+  linkedin: linkedin,
+  behance: behance,
+  codepen: codepen,
+  discord: discord,
+  custom: custom,
+};
+
 export const profile = () => {
   const profile = {
     name: "JACOB",
@@ -52,10 +69,10 @@ export const profile = () => {
     joined: "December 2021",
     coverPhoto: coverPhoto,
     profilePic: profilePhoto,
-    soialLinks: [
+    socialLinks: [
       {
         link: "https://twitch.com/",
-        logo: twitch,
+        logo: gitlab,
       },
       {
         link: "https://twitter.com/",
@@ -209,7 +226,7 @@ export const articles = () => {
   const article = {
     blogTitle: "Landing Page static Site",
     author: "Killan James",
-    profile_pic: "../assets/Profile Images/profile_pic.png",
+    profile_pic: "../assets/ProfileImages/profile_pic.png",
     likes: "84",
     views: "84",
     posted: "07/05/22",

@@ -165,21 +165,36 @@ function RouterPages() {
                   </DefaultLayout>
                 }
               />
-              <Route
-                path="/chat"
-                element={
-                  matches ? (
-                    <NoFooterLayout>
-                      <MessagesPage />
-                    </NoFooterLayout>
-                  ) : (
-                    <NoFooterLayout>
-                      <ChatPage />
-                    </NoFooterLayout>
-                  )
-                }
-              />
             </Route>
+            <Route
+              path="/chat/:receiverId"
+              element={
+                matches ? (
+                  <NoFooterLayout>
+                    <MessagesPage />
+                  </NoFooterLayout>
+                ) : (
+                  <NoFooterLayout>
+                    <ChatPage />
+                  </NoFooterLayout>
+                )
+              }
+            />
+            <Route
+              path="/chat"
+              element={
+                matches ? (
+                  <NoFooterLayout>
+                    <MessagesPage />
+                  </NoFooterLayout>
+                ) : (
+                  <NoFooterLayout>
+                    <ChatPage />
+                  </NoFooterLayout>
+                )
+              }
+            />
+
             <Route
               path="/sellers"
               element={

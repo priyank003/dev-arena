@@ -39,6 +39,9 @@ const sendMessage = catchAsync(async (req, res) => {
     $push: {
       messages: message._id,
     },
+    $addToSet: {
+      participants: req.user.id,
+    },
   };
 
   await conversationService.updateConversationById(req.body.conversationId, update);

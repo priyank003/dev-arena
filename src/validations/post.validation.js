@@ -64,6 +64,11 @@ const createComment = {
     description: Joi.string().required(),
   }),
 };
+const createReply = {
+  body: Joi.object().keys({
+    description: Joi.string().required(),
+  }),
+};
 
 module.exports = {
   createPost,
@@ -74,4 +79,5 @@ module.exports = {
   likePost,
   viewPost,
   createComment,
+  createReply,
 };

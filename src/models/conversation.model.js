@@ -10,6 +10,12 @@ const conversationSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    participants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     conversationName: {
       type: String,
       default: '',

@@ -37,7 +37,7 @@ const queryMessagesByConversationId = async (filter, options) => {
 };
 
 const getConversationsByUserId = async (userId) => {
-  return Conversation.find({ members: userId })
+  const convo = await Conversation.find({ participants: userId })
     .populate({
       path: 'members',
     })
@@ -47,6 +47,8 @@ const getConversationsByUserId = async (userId) => {
         path: 'sender receiver',
       },
     });
+
+  return convo;
 };
 /**
  * Get message by userId

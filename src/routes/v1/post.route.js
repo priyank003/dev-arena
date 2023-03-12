@@ -40,7 +40,12 @@ router
   .delete(auth('managePosts'), validate(postValidation.deletePost), postController.deletePost);
 
 router
-  .route('/:postId/comments')
+  .route('/comments/:postId')
+  .get(auth('managePosts'), postController.getComments)
   .post(auth('managePosts'), validate(postValidation.createComment), postController.createComment);
+
+router.route('/comment/replies/:commentId').get(auth('managePosts'), postController.getCommentById);
+
+router.route('/comment/reply/:commentId').post(auth('managePosts'), postController.createReply);
 
 module.exports = router;

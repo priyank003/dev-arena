@@ -11,13 +11,22 @@ const commentSchema = mongoose.Schema(
     author: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',
-      required: true,
     },
     description: {
       type: String,
       required: true,
     },
     likesCount: {
+      type: Number,
+      default: 0,
+    },
+    isReply: {
+      type: Boolean,
+      default: false,
+    },
+    // replies: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Comment' }],
+    replies: [{}],
+    replyCount: {
       type: Number,
       default: 0,
     },

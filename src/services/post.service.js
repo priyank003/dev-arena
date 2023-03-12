@@ -175,6 +175,44 @@ const createComment = async (commentBody) => {
   return Comment.create(commentBody);
 };
 
+const patchComment = async (commentId, patch) => {
+  console.log(commentId, patch);
+  return await Comment.findOneAndUpdate({ _id: commentId }, patch);
+};
+
+const getComments = async (postId) => {
+  return await Post.findOne({ posterId: postId }, { comments: 1 })
+    .populate('comments')
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+        model: 'User',
+      },
+    });
+  // .populate({
+  //   path: 'comments',
+  //   populate: {
+  //     path: 'replies',
+  //     model: 'Comment',
+  //   },
+  // });
+  // .populate('author comments');
+  // console.log(commentId);
+  // const comments= Comment.find({})
+};
+
+const getCommentById = async (commentId) => {
+  const comment = await Comment.findById(commentId).populate({
+    path: 'replies',
+    populate: {
+      path: 'author',
+      model: 'User',
+    },
+  });
+  return comment;
+};
+
 module.exports = {
   createPost,
   queryPosts,
@@ -185,4 +223,7 @@ module.exports = {
   patchPostById,
   createComment,
   searchPosts,
+  patchComment,
+  getComments,
+  getCommentById,
 };

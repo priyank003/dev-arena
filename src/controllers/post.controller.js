@@ -33,7 +33,7 @@ const createPost = catchAsync(async (req, res) => {
 
 const getPosts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'filterBy']);
-  options.populate = 'author,comments';
+  options.populate = 'author,comments,replies';
 
   const result = await postService.queryPosts(options, req.user.id);
 
@@ -143,6 +143,7 @@ const createComment = catchAsync(async (req, res) => {
     commentId: `c${randomBytes(8).toString('hex')}`,
     author: req.user.id,
   };
+  console.log(commentPayload);
   const comment = await postService.createComment(commentPayload);
 
   const postCommentUpdate = { $push: { comments: comment._id }, $inc: { totalComments: 1 } };
@@ -154,6 +155,38 @@ const createComment = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(comment);
 });
 
+const createReply = async (req, res) => {
+  const replyPayload = {
+    isReply: true,
+    commentId: `c${randomBytes(8).toString('hex')}`,
+    author: req.user.id,
+    ...req.body,
+  };
+  console.log('reply payload', replyPayload);
+
+  const reply = await postService.createComment(replyPayload);
+  const postReplyUpdate = { $push: { replies: reply._id }, $inc: { replyCount: 1 } };
+
+  const comment = await postService.patchComment(req.params.commentId, postReplyUpdate);
+
+  if (!comment) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Comment not found');
+  }
+  res.status(httpStatus.CREATED).send(comment);
+};
+
+const getComments = async (req, res) => {
+  const comments = await postService.getComments(req.params.postId);
+
+  console.log(comments);
+  res.send(comments);
+};
+
+const getCommentById = async (req, res) => {
+  const comment = await postService.getCommentById(req.params.commentId);
+
+  res.send(comment);
+};
 module.exports = {
   createPost,
   getPosts,
@@ -164,4 +197,7 @@ module.exports = {
   viewPost,
   createComment,
   searchQueryPosts,
+  createReply,
+  getComments,
+  getCommentById,
 };

@@ -19,7 +19,7 @@ router
     validate(postValidation.createPost),
     postController.createPost
   )
-  .get(auth('managePosts'), validate(postValidation.getPosts), postController.getPosts);
+  .get(validate(postValidation.getPosts), postController.getPosts);
 
 router.get('/search', auth('managePosts'), postController.searchQueryPosts);
 
@@ -29,7 +29,7 @@ router.get('/view/:postId', auth('viewPosts'), validate(postValidation.viewPost)
 
 router
   .route('/:postId')
-  .get(auth('getPosts'), validate(postValidation.getPost), postController.getPost)
+  .get(validate(postValidation.getPost), postController.getPost)
   .patch(
     auth('managePosts'),
     upload.array('media'),
@@ -41,7 +41,7 @@ router
 
 router
   .route('/comments/:postId')
-  .get(auth('managePosts'), postController.getComments)
+  .get(postController.getComments)
   .post(auth('managePosts'), validate(postValidation.createComment), postController.createComment);
 
 router.route('/comment/replies/:commentId').get(auth('managePosts'), postController.getCommentById);

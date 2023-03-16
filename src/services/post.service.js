@@ -30,7 +30,10 @@ const timeStampCalculation = {
 };
 
 const queryPosts = async (options, userId) => {
-  const followings = await User.find({ _id: userId });
+  let followings;
+  if (userId) {
+    followings = await User.find({ _id: userId });
+  }
 
   let filter = {};
 

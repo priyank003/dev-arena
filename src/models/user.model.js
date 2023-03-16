@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema(
       fileType: String,
       pathUrl: String,
     },
+    bgCover: {
+      fileType: String,
+      pathUrl: String,
+    },
     email: {
       type: String,
       required: true,

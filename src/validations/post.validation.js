@@ -28,7 +28,7 @@ const getPost = {
 
 const updatePost = {
   params: Joi.object().keys({
-    postId: Joi.required().custom(objectId),
+    postId: Joi.string().required(),
   }),
   body: Joi.object()
     .keys({

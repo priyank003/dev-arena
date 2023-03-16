@@ -35,7 +35,7 @@ const getPosts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'filterBy']);
   options.populate = 'author,comments,replies';
 
-  const result = await postService.queryPosts(options, req.user.id);
+  const result = await postService.queryPosts(options, req?.user?.id ? req.user.id : '');
 
   res.send(result);
 });
@@ -102,6 +102,7 @@ const viewPost = catchAsync(async (req, res) => {
 });
 
 const updatePost = catchAsync(async (req, res) => {
+  console.log('patcgh');
   const postPayload = {
     ...req.body,
     media: req.files.map((file) => {

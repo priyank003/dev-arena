@@ -99,6 +99,19 @@ const followUser = async (req, res) => {
   }
 };
 
+const uploadBgCover = async (req, res) => {
+  const user = req.user.id;
+  const mediaFile = req.file;
+  console.log(mediaFile);
+  const userProfileBgCover = await mediaUpload(mediaFile.path);
+  fs.unlinkSync(mediaFile.path);
+
+  const media = { fileType: mediaFile.mimeType, pathUrl: userProfileBgCover.url };
+
+  await userService.uploadProfileBgCover(user, media);
+  res.status(httpStatus.CREATED).send({ status: 'ok', bgCover: media });
+};
+
 module.exports = {
   createUser,
   getUsers,
@@ -109,4 +122,5 @@ module.exports = {
   getUserByUsername,
   uploadAvatar,
   followUser,
+  uploadBgCover,
 };

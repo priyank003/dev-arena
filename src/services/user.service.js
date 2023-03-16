@@ -121,6 +121,16 @@ const uploadAvatar = async (userId, media) => {
   );
 };
 
+const uploadProfileBgCover = async (userId, media) => {
+  await User.updateOne(
+    { _id: userId },
+    {
+      bgCover: media,
+    },
+    { upsert: true }
+  );
+};
+
 module.exports = {
   createUser,
   queryUsers,
@@ -134,4 +144,5 @@ module.exports = {
   findByFilter,
   searchUsers,
   uploadAvatar,
+  uploadProfileBgCover,
 };

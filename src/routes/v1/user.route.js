@@ -26,7 +26,9 @@ router
 
 router.route('/avatar').post(auth('getUsers'), upload.single('media'), userController.uploadAvatar);
 
-router.route('/follow/:userId').get(auth('getUsers'),userController.followUser );
+router.route('/profile/bgCover').post(auth('getUsers'), upload.single('bgCover'), userController.uploadBgCover);
+
+router.route('/follow/:userId').get(auth('getUsers'), userController.followUser);
 
 module.exports = router;
 

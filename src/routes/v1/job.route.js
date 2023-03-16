@@ -19,9 +19,9 @@ router
     validate(jobValidation.createJob),
     jobController.createJob
   )
-  .get(auth('getJobs'), validate(jobValidation.getJobs), jobController.getJobs);
+  .get(validate(jobValidation.getJobs), jobController.getJobs);
 
-router.get('/search', auth('getJobs'),validate(jobValidation.searchJobs), jobController.searchQueryJobs);
+router.get('/search', auth('getJobs'), validate(jobValidation.searchJobs), jobController.searchQueryJobs);
 
 router.get('/like/:jobId', auth('likeJobs'), validate(jobValidation.likeJob), jobController.likeJob);
 
@@ -31,7 +31,7 @@ router.get('/view/:jobId', auth('viewJobs'), validate(jobValidation.viewJob), jo
 
 router
   .route('/:jobId')
-  .get(auth('getJobs'), validate(jobValidation.getJob), jobController.getJob)
+  .get(validate(jobValidation.getJob), jobController.getJob)
   .patch(
     auth('manageJobs'),
     upload.single('companyLogo'),

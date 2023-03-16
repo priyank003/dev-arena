@@ -131,6 +131,10 @@ const uploadProfileBgCover = async (userId, media) => {
   );
 };
 
+const patchUserByFilter = async (filter, update) => {
+  return await User.updateMany(filter, update);
+};
+
 module.exports = {
   createUser,
   queryUsers,
@@ -145,4 +149,5 @@ module.exports = {
   searchUsers,
   uploadAvatar,
   uploadProfileBgCover,
+  patchUserByFilter,
 };

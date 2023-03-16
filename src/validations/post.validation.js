@@ -55,7 +55,7 @@ const viewPost = {
 
 const deletePost = {
   params: Joi.object().keys({
-    postId: Joi.string().custom(objectId),
+    postId: Joi.string().required(),
   }),
 };
 

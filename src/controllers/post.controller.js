@@ -114,8 +114,26 @@ const updatePost = catchAsync(async (req, res) => {
 });
 
 const deletePost = catchAsync(async (req, res) => {
+  const postToBeDelete = await postService.getPostById(req.params.postId);
+
+  const likedBy = postToBeDelete.likedBy;
+  const viewedBy = postToBeDelete.viewedBy;
+
+  const authorUpdate = {
+    $pull: { likedPosts: req.params.postId, viewedPosts: req.params.postId },
+    $inc: { postsCount: -1 },
+  };
+
+  const usersUpdate = { $pull: { likedPosts: req.params.postId, viewedPosts: req.params.postId } };
+
+  const usersFilter = { _id: { $in: [...likedBy, ...viewedBy] } };
+
+  await userService.patchUserByFilter({ _id: postToBeDelete.author.id }, authorUpdate);
+
+  await userService.patchUserByFilter(usersFilter, usersUpdate);
+
   await postService.deletePostById(req.params.postId);
-  res.status(httpStatus.NO_CONTENT).send();
+  res.send('deleted post');
 });
 
 const searchQueryPosts = catchAsync(async (req, res) => {

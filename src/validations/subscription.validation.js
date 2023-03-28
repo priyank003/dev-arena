@@ -6,13 +6,14 @@ const createCheckoutSession = {
     packageType: Joi.string().required(),
     successUrl: Joi.string().required(),
     cancelUrl: Joi.string().required(),
+    credits: Joi.number().required(),
   }),
 };
 
 const setupSubscription = {
   query: Joi.object().keys({
     sessionId: Joi.string().required(),
-    credits:Joi.string().required()
+    credits: Joi.string().required(),
   }),
 };
 

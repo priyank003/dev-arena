@@ -27,7 +27,7 @@ const priceIds = {
 //   enterprise: 10,
 // };
 
-const createCheckoutSession = async (packageType, successUrl, cancelUrl, customerId, userId) => {
+const createCheckoutSession = async (packageType, successUrl, cancelUrl, customerId, credits, userId) => {
   const subscription = await Subscription.findOne({ user: userId });
   if (subscription) {
     throw new ApiError(httpStatus.CONFLICT, 'User already subscribed');
@@ -37,7 +37,7 @@ const createCheckoutSession = async (packageType, successUrl, cancelUrl, custome
     line_items: [
       {
         price: priceIds[packageType],
-        quantity: 1,
+        quantity: credits,
       },
     ],
     mode: 'payment',

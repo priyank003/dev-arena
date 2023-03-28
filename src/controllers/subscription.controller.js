@@ -5,7 +5,7 @@ const { subscriptionService } = require('../services');
 const ApiError = require('../utils/ApiError');
 
 const createCheckoutSession = catchAsync(async (req, res) => {
-  const { packageType, successUrl, cancelUrl } = req.body;
+  const { packageType, successUrl, cancelUrl, credits } = req.body;
   const customerId = await subscriptionService.createCustomer(req.user);
 
   const session = await subscriptionService.createCheckoutSession(
@@ -13,6 +13,7 @@ const createCheckoutSession = catchAsync(async (req, res) => {
     successUrl,
     cancelUrl,
     customerId,
+    credits,
     req.user.id
   );
   if (!session) {

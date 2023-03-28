@@ -9,7 +9,8 @@ const Stripe = stripe(config.stripeKey);
 
 const priceIds = {
   ...(config.env === 'production'
-    ? { starter: 'price_1MBymEBq5byX0xad4A1KdbOb' }
+    ? // ? { starter: 'price_1MBymEBq5byX0xad4A1KdbOb' }
+      { starter: 'price_1MByybBq5byX0xadjGrzxAv6' }
     : { starter: 'price_1MByybBq5byX0xadjGrzxAv6' }),
 
   ...(config.env === 'production'

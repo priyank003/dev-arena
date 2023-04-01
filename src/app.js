@@ -22,7 +22,7 @@ if (config.env !== 'test') {
   app.use(morgan.errorHandler);
 }
 const corsOptions = {
-  origin: ['https://git-visual-helpinghand03.vercel.app', 'http://localhost:3000'],
+  origin: ['https://git-visual-helpinghand03.vercel.app', 'https://www.gitvisual.com/'],
 };
 app.use(cors(corsOptions));
 
